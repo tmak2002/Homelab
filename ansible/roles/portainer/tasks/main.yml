@@ -1,0 +1,26 @@
+---
+- name: Create portainer directory
+  ansible.builtin.file:
+    path: /opt/portainer
+    state: directory
+    mode: "0755"
+
+- name: Create portainer data directory
+  ansible.builtin.file:
+    path: /srv/portainer
+    state: directory
+    mode: "0755"
+
+- name: Setup portainer
+  ansible.builtin.template:
+    src: compose.yml.j2
+    dest: /opt/portainer/compose.yml
+    mode: "0644"
+  notify: restart portainer
+
+- name: Update caddy config
+  ansible.builtin.template:
+    src: portainer.j2
+    dest: /caddy/sites/portainer
+    mode: "0644"
+  notify: restart caddy

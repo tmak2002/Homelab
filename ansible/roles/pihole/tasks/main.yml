@@ -1,0 +1,26 @@
+---
+- name: Create pihole directory
+  ansible.builtin.file:
+    path: /opt/pihole
+    state: directory
+    mode: "0755"
+
+- name: Create pihole data directory
+  ansible.builtin.file:
+    path: /srv/pihole
+    state: directory
+    mode: "0755"
+
+- name: Setup pihole
+  ansible.builtin.template:
+    src: compose.yml.j2
+    dest: /opt/pihole/compose.yml
+    mode: "0644"
+  notify: restart pihole
+
+- name: Update caddy config
+  ansible.builtin.template:
+    src: pihole.j2
+    dest: srv//caddy/sites/pihole
+    mode: "0644"
+  notify: restart caddy

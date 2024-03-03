@@ -1,0 +1,2 @@
+---
+docker_update_command: docker compose pull && docker compose down && docker compose up -d --build --remove-orphans

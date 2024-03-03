@@ -1,0 +1,5 @@
+---
+- name: Restart sftpgo
+  ansible.builtin.command:
+    chdir: /opt/sftpgo
+    cmd: "{{ docker_update_command }}"

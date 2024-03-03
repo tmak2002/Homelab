@@ -1,0 +1,19 @@
+---
+- name: Create sftpgo directory
+  ansible.builtin.file:
+    path: /opt/sftpgo
+    state: directory
+    mode: "0755"
+
+- name: Create sftpgo data directory
+  ansible.builtin.file:
+    path: /srv/sftpgo
+    state: directory
+    mode: "0755"
+
+- name: Setup sftpgo
+  ansible.builtin.template:
+    src: compose.yml.j2
+    dest: /opt/sftpgo/compose.yml
+    mode: "0644"
+  notify: restart sftpgo

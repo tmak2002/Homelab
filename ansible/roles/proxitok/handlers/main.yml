@@ -1,0 +1,9 @@
+---
+- name: Restart proxitok
+  ansible.builtin.command:
+    chdir: /opt/proxitok
+    cmd: "{{ docker_update_command }}"
+
+- name: Restart caddy
+  ansible.builtin.command:
+    cmd: "{{ caddy_restart_command }}"

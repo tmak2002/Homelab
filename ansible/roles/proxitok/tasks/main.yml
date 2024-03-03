@@ -1,0 +1,20 @@
+---
+- name: Create proxitok directory
+  ansible.builtin.file:
+    path: /opt/proxitok
+    state: directory
+    mode: "0755"
+
+- name: Setup proxitok
+  ansible.builtin.template:
+    src: compose.yml.j2
+    dest: /opt/proxitok/compose.yml
+    mode: "0644"
+  notify: restart proxitok
+
+- name: Update caddy config
+  ansible.builtin.template:
+    src: proxitok.j2
+    dest: /srv/caddy/sites/proxitok
+    mode: "0644"
+  notify: restart caddy

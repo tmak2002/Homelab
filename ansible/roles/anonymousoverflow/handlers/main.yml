@@ -1,0 +1,9 @@
+---
+- name: Restart anonymousoverflow
+  ansible.builtin.command:
+    chdir: /opt/anonymousoverflow
+    cmd: "{{ docker_update_command }}"
+
+- name: Restart caddy
+  ansible.builtin.command:
+    cmd: "{{ caddy_restart_command }}"
