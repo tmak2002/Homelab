@@ -1,0 +1,21 @@
+services:
+  redlib:
+    image: quay.io/redlib/redlib:latest-arm
+    restart: unless-stopped
+    container_name: "redlib"
+    user: nobody
+    read_only: true
+    cap_drop:
+      - ALL
+    networks:
+      - services
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "--tries=1", "http://localhost:8080/settings"]
+      interval: 5m
+      timeout: 3s
+
+networks:
+  services:
+    external: true

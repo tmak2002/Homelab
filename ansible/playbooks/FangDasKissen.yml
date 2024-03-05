@@ -1,0 +1,14 @@
+---
+- name: Set up FangDasKissen
+  hosts: FangDasKissen
+  become: true
+
+  roles:
+    - sftpgo
+    - caddy
+    - pihole
+    - portainer
+    - anonymousoverflow
+    - proxitok
+    - redlib
+    - searxng

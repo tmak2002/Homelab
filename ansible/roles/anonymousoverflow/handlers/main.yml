@@ -1,0 +1,9 @@
+---
+- name: Restart anonymousoverflow
+  ansible.builtin.shell: # noqa: command-instead-of-shell
+    chdir: /opt/anonymousoverflow
+    cmd: "{{ docker_update_command }}"
+
+- name: Restart caddy
+  ansible.builtin.shell: # noqa: command-instead-of-shell
+    cmd: "{{ caddy_restart_command }}"

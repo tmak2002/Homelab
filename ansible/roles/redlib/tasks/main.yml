@@ -1,0 +1,20 @@
+---
+- name: Create redlib directory
+  ansible.builtin.file:
+    path: /opt/redlib
+    state: directory
+    mode: "0755"
+
+- name: Setup redlib
+  ansible.builtin.template:
+    src: compose.yml.j2
+    dest: /opt/redlib/compose.yml
+    mode: "0644"
+  notify: Restart redlib
+
+- name: Update caddy config
+  ansible.builtin.template:
+    src: redlib.j2
+    dest: /srv/caddy/sites/redlib
+    mode: "0644"
+  notify: Restart caddy
