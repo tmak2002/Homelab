@@ -1,7 +1,7 @@
 services:
   proxitok:
     container_name: proxitok
-    image: ghcr.io/pablouser1/proxitok:latest
+    image: ghcr.io/pablouser1/proxitok:latest@sha256:7fc40de313c115e3413190af9a2e5090e76ea580d549dbca324219daacc96f47
     restart: unless-stopped
     environment:
       - LATTE_CACHE=/cache
@@ -43,7 +43,7 @@ services:
 
   signer:
     container_name: proxitok-signer
-    image: ghcr.io/pablouser1/signtok:master
+    image: ghcr.io/pablouser1/signtok:latest@sha256:c55ed70b17ebd4a237c2bbbea71579c4800c89ad4c15a1e6e2060006378a353f
     restart: unless-stopped
     user: nobody
     read_only: true
