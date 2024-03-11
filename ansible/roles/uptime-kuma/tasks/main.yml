@@ -1,0 +1,26 @@
+---
+- name: Create uptime-kuma directory
+  ansible.builtin.file:
+    path: /opt/uptime-kuma
+    state: directory
+    mode: "0755"
+
+- name: Create uptime-kuma data directory
+  ansible.builtin.file:
+    path: /srv/uptime-kuma
+    state: directory
+    mode: "0755"
+
+- name: Setup uptime-kuma
+  ansible.builtin.template:
+    src: compose.yml.j2
+    dest: /opt/uptime-kuma/compose.yml
+    mode: "0644"
+  notify: Restart uptime-kuma
+
+- name: Update caddy config
+  ansible.builtin.template:
+    src: uptime-kuma.j2
+    dest: /srv/caddy/sites/uptime-kuma
+    mode: "0644"
+  notify: Restart caddy
