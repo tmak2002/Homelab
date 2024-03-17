@@ -17,7 +17,7 @@ services:
 
   searxng:
     container_name: searxng
-    image: searxng/searxng@sha256:ec3b2150a46f7e8935d669f7f63ad1570ecbca2621711b2666e96f4acc49f5f9
+    image: searxng/searxng@sha256:a8d5e8a615616ea18331208a432aef81a60199750a032410e89f55a44a5fffc5
     restart: unless-stopped
     volumes:
       - /srv/searxng/settings.yml:/etc/searxng/settings.yml
