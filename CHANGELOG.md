@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/tmak2002/Homelab/compare/v1.1.0...v1.2.0) (2024-03-21)
+
+
+### Features
+
+* add uptime-kuma ([2908857](https://github.com/tmak2002/Homelab/commit/290885735ceac4fc8740e6dc7b6d68bcdf6c03cf))
+
 ## [1.1.0](https://github.com/tmak2002/Homelab/compare/v1.0.0...v1.1.0) (2024-03-06)
 
 
