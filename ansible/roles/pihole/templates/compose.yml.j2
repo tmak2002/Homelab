@@ -1,4 +1,15 @@
 services:
+  unbound:
+    image: pedantic/unbound:latest
+    container_name: unbound
+    restart: unless-stopped
+    hostname: unbound
+    volumes:
+      - /srv/unbound:/opt/unbound/etc/unbound/
+    networks:
+      dns:
+        ipv4_address: 10.2.0.200
+
   pihole:
     container_name: pihole
     image: pihole/pihole:2024.02.2
@@ -8,7 +19,7 @@ services:
     environment:
       - TZ=Europe/Berlin
       - FTLCONF_LOCAL_IPV4=192.168.178.2
-      - PIHOLE_DNS_=1.1.1.1
+      - PIHOLE_DNS_=10.2.0.200
       - WEBPASSWORD={{ pihole_password }}
     volumes:
       - /srv/pihole/etc-pihole/:/etc/pihole/
@@ -17,8 +28,14 @@ services:
       - NET_ADMIN
     restart: unless-stopped
     networks:
+      - dns
       - home
 
 networks:
+  dns:
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.2.0.0/24
   home:
     external: true
