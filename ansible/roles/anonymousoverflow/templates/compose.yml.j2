@@ -1,7 +1,7 @@
 services:
   anonymousoverflow:
     container_name: anonymousoverflow
-    image: codeberg.org/aryak/anonymousoverflow-docker-builds@sha256:7a99fb8c41ff741a013185b28b97003ab4aca62200f712d17626b3613deda343
+    image: codeberg.org/aryak/anonymousoverflow-docker-builds@sha256:a2a1dddded93e132e15f2239ab5b57f631e6318879b96436ac59384e08da53c9
     environment:
       - APP_URL=overflow.{{ services_domain }}
       - JWT_SIGNING_SECRET={{ anonymousoverflow_secret }}
