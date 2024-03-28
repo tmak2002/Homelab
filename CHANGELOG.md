@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/tmak2002/Homelab/compare/v1.2.0...v1.3.0) (2024-03-28)
+
+
+### Features
+
+* add unbound ([6eddd94](https://github.com/tmak2002/Homelab/commit/6eddd9409b5b07a5743668421e7f4dcc488d178a))
+
 ## [1.2.0](https://github.com/tmak2002/Homelab/compare/v1.1.0...v1.2.0) (2024-03-21)
 
 
