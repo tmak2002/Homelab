@@ -11,10 +11,23 @@
     state: directory
     mode: "0755"
 
+- name: Create unbound data directory
+  ansible.builtin.file:
+    path: /srv/unbound
+    state: directory
+    mode: "0755"
+
 - name: Setup pihole
   ansible.builtin.template:
     src: compose.yml.j2
     dest: /opt/pihole/compose.yml
+    mode: "0644"
+  notify: Restart pihole
+
+- name: Setup unbound
+  ansible.builtin.template:
+    src: unbound.conf.j2
+    dest: /srv/unbound/unbound.conf
     mode: "0644"
   notify: Restart pihole
 
