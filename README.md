@@ -10,6 +10,3 @@ use this command to see all avaible options.
 ```bash
   just --list
 ```
-
-## Documentation
-- [Documentation](https://github.com/tmak2002/Homelab/tree/main/docs)
