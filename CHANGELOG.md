@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.4.0](https://github.com/tmak2002/Homelab/compare/v1.3.0...v1.4.0) (2024-03-30)
+
+
+### Features
+
+* better readme  ([9069718](https://github.com/tmak2002/Homelab/commit/90697186fb8309b2548531e5b72371fbf5262aa4))
+
+
+### Bug Fixes
+
+* remove Portainer ([89a53fc](https://github.com/tmak2002/Homelab/commit/89a53fc5246d203844b9f32ffcc1218f788d2e2f))
+
 ## [1.3.0](https://github.com/tmak2002/Homelab/compare/v1.2.0...v1.3.0) (2024-03-28)
 
 
