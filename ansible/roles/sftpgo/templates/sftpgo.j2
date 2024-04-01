@@ -1,0 +1,7 @@
+sftpgo.internal {
+  import headers
+  reverse_proxy sftpgo:8080
+  tls internal
+  @denied not remote_ip 192.168.178.1/24
+  abort @denied
+}

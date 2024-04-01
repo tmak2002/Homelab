@@ -1,0 +1,19 @@
+services:
+  anonymousoverflow:
+    container_name: anonymousoverflow
+    image: codeberg.org/aryak/anonymousoverflow-docker-builds@sha256:cab6a222e8187a5a4b53d8b1fa42aae94194373369fd8945bfcf4d2655bc25c8
+    environment:
+      - APP_URL=overflow.{{ services_domain }}
+      - JWT_SIGNING_SECRET={{ anonymousoverflow_secret }}
+    restart: unless-stopped
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    networks:
+      - services
+
+networks:
+  services:
+    external: true

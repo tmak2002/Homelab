@@ -1,0 +1,60 @@
+services:
+  proxitok:
+    container_name: proxitok
+    image: ghcr.io/pablouser1/proxitok:latest@sha256:7fc40de313c115e3413190af9a2e5090e76ea580d549dbca324219daacc96f47
+    restart: unless-stopped
+    environment:
+      - LATTE_CACHE=/cache
+      - API_CACHE=redis
+      - REDIS_HOST=proxitok-redis
+      - REDIS_PORT=6379
+      - API_SIGNER=remote
+      - API_SIGNER_URL=http://proxitok-signer:8080/signature
+    depends_on:
+      - redis
+      - signer
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - SETGID
+      - SETUID
+    networks:
+      - services
+      - proxitok
+
+  redis:
+    container_name: proxitok-redis
+    image: redis:7.2.4-alpine
+    command: redis-server --save 60 1 --loglevel warning
+    restart: unless-stopped
+    user: nobody
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    tmpfs:
+      - /data:size=10M,mode=0770,uid=65534,gid=65534,noexec,nosuid,nodev
+    cap_drop:
+      - ALL
+    networks:
+      - proxitok
+
+  signer:
+    container_name: proxitok-signer
+    image: ghcr.io/pablouser1/signtok:latest@sha256:c55ed70b17ebd4a237c2bbbea71579c4800c89ad4c15a1e6e2060006378a353f
+    restart: unless-stopped
+    user: nobody
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    networks:
+      - proxitok
+
+networks:
+  services:
+    external: true
+  proxitok:

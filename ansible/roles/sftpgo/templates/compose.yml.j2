@@ -1,0 +1,22 @@
+services:
+  sftpgo:
+    container_name: sftpgo
+    image: drakkan/sftpgo:v2.5.6-alpine
+    restart: unless-stopped
+    ports:
+      - 21:21/tcp
+      - 21000-21010:21000-21010/tcp
+    volumes:
+      - /srv/sftpgo/data:/srv/sftpgo/data
+      - /srv/sftpgo/backups:/srv/sftpgo/backups
+      - /srv/sftpgo/home:/var/lib/sftpgo
+    environment:
+      - SFTPGO_FTPD__BINDINGS__0__PORT=21
+      - SFTPGO_FTPD__PASSIVE_PORT_RANGE__START=21000
+      - SFTPGO_FTPD__PASSIVE_PORT_RANGE__END=21010
+    networks:
+      - home
+
+networks:
+  home:
+    external: true
