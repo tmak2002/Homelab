@@ -12,7 +12,7 @@ services:
     volumes:
       - /srv/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
       - /srv/caddy/sites:/etc/caddy/sites:ro
-      - /srv/ftp/data:/var/www:ro
+      - /srv/ftp:/var/www:ro
       - /srv/caddy/data:/data:rw
       - /srv/caddy/config:/config:rw
     read_only: true
