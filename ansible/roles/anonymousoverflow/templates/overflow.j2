@@ -1,0 +1,6 @@
+overflow.{{ services_domain }} {
+  import disable_log
+  import headers
+  import disable_index
+  reverse_proxy anonymousoverflow:8080
+}

@@ -1,0 +1,56 @@
+---
+- name: Create searxng directory
+  ansible.builtin.file:
+    path: /opt/searxng
+    state: directory
+    mode: "0755"
+  tags:
+    - setup
+
+- name: Create searxng data directory
+  ansible.builtin.file:
+    path: /srv/searxng
+    state: directory
+    mode: "0755"
+  tags:
+    - setup
+
+- name: Setup searxng
+  ansible.builtin.template:
+    src: compose.yml.j2
+    dest: /opt/searxng/compose.yml
+    mode: "0644"
+  notify: Restart searxng
+  tags:
+    - setup
+    - update
+
+- name: Setup searxng settings
+  ansible.builtin.template:
+    src: settings.yml.j2
+    dest: /srv/searxng/settings.yml
+    mode: "0644"
+  notify: Restart searxng
+  tags:
+    - setup
+    - update
+
+- name: Setup searxng limiter
+  ansible.builtin.template:
+    src: limiter.toml.j2
+    dest: /srv/searxng/limiter.toml
+    mode: "0644"
+  notify: Restart searxng
+  tags:
+    - setup
+    - update
+
+- name: Update caddy config
+  ansible.builtin.template:
+    src: searxng.j2
+    dest: /srv/caddy/sites/searxng
+    mode: "0644"
+  notify: Restart caddy
+  tags:
+    - setup
+    - update

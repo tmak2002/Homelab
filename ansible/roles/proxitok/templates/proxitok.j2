@@ -1,0 +1,6 @@
+proxitok.{{ services_domain }} {
+  import disable_log
+  import headers
+  import disable_index
+  reverse_proxy proxitok:8080
+}

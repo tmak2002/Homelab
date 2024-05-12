@@ -1,0 +1,54 @@
+---
+- name: Create pihole directory
+  ansible.builtin.file:
+    path: /opt/pihole
+    state: directory
+    mode: "0755"
+  tags:
+    - setup
+
+- name: Create pihole data directory
+  ansible.builtin.file:
+    path: /srv/pihole
+    state: directory
+    mode: "0755"
+  tags:
+    - setup
+
+- name: Create unbound data directory
+  ansible.builtin.file:
+    path: /srv/unbound
+    state: directory
+    mode: "0755"
+  tags:
+    - setup
+
+- name: Setup pihole
+  ansible.builtin.template:
+    src: compose.yml.j2
+    dest: /opt/pihole/compose.yml
+    mode: "0644"
+  notify: Restart pihole
+  tags:
+    - setup
+    - update
+
+- name: Setup unbound
+  ansible.builtin.template:
+    src: unbound.conf.j2
+    dest: /srv/unbound/unbound.conf
+    mode: "0644"
+  notify: Restart pihole
+  tags:
+    - setup
+    - update
+
+- name: Update caddy config
+  ansible.builtin.template:
+    src: pihole.j2
+    dest: /srv/caddy/sites/pihole
+    mode: "0644"
+  notify: Restart caddy
+  tags:
+    - setup
+    - update

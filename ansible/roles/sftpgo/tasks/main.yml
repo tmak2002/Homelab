@@ -1,0 +1,36 @@
+---
+- name: Create sftpgo directory
+  ansible.builtin.file:
+    path: /opt/sftpgo
+    state: directory
+    mode: "0755"
+  tags:
+    - setup
+
+- name: Create sftpgo data directory
+  ansible.builtin.file:
+    path: /srv/sftpgo
+    state: directory
+    mode: "0755"
+  tags:
+    - setup
+
+- name: Setup sftpgo
+  ansible.builtin.template:
+    src: compose.yml.j2
+    dest: /opt/sftpgo/compose.yml
+    mode: "0644"
+  notify: Restart sftpgo
+  tags:
+    - setup
+    - update
+
+- name: Update caddy config
+  ansible.builtin.template:
+    src: sftpgo.j2
+    dest: /srv/caddy/sites/sftpgo
+    mode: "0644"
+  notify: Restart caddy
+  tags:
+    - setup
+    - update

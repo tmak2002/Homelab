@@ -1,0 +1,57 @@
+---
+- name: Create caddy directory
+  ansible.builtin.file:
+    path: /opt/caddy
+    state: directory
+    mode: "0755"
+  tags:
+    - setup
+
+- name: Create caddy data directory
+  ansible.builtin.file:
+    path: /srv/caddy
+    state: directory
+    mode: "0755"
+  tags:
+    - setup
+
+- name: Create ftp directory
+  ansible.builtin.file:
+    path: /srv/ftp
+    state: directory
+    mode: "0755"
+  tags:
+    - setup
+
+- name: Create networks
+  community.docker.docker_network:
+    name:
+      - home
+      - services
+  tags:
+    - setup
+
+- name: Setup Caddyfile
+  ansible.builtin.template:
+    src: Caddyfile.j2
+    dest: /srv/caddy/Caddyfile
+    mode: "0644"
+  tags:
+    - setup
+    - update
+
+- name: Setup caddy
+  ansible.builtin.template:
+    src: compose.yml.j2
+    dest: /opt/caddy/compose.yml
+    mode: "0644"
+  tags:
+    - setup
+    - update
+
+- name: Restart caddy
+  ansible.builtin.shell: # noqa: command-instead-of-shell
+    chdir: /opt/caddy
+    cmd: "{{ docker_update_command }}"
+  tags:
+    - setup
