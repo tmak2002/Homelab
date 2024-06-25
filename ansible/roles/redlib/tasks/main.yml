@@ -1,18 +1,22 @@
 ---
-- name: Create redlib directory
-  ansible.builtin.file:
-    path: /opt/redlib
-    state: directory
-    mode: "0755"
-  tags:
-    - setup
-
-- name: Setup redlib
-  ansible.builtin.template:
-    src: compose.yml.j2
-    dest: /opt/redlib/compose.yml
-    mode: "0644"
-  notify: Restart redlib
+- name: Create and start redlib container
+  community.docker.docker_container:
+    name: redlib
+    image: "{{ redlib_image }}"
+    pull: true
+    restart_policy: unless-stopped
+    user: nobody
+    read_only: true
+    cap_drop:
+      - ALL
+    networks:
+      - name: services
+    security_opts:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "--tries=1", "http://localhost:8080/settings"]
+      interval: 5m
+      timeout: 3s
   tags:
     - setup
     - update
