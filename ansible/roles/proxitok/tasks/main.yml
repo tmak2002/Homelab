@@ -72,6 +72,9 @@
     networks:
       - name: services
       - name: proxitok
+  tags:
+    - setup
+    - update
 
 - name: Update caddy config
   ansible.builtin.template:
