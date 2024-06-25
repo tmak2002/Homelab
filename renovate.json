@@ -6,7 +6,7 @@
   ],
   "regexManagers": [
     {
-      "fileMatch": "(^|/)(?:docker-)?compose[^/]*\\.ya?ml\\.j2$",
+      "fileMatch": "main.yml",
       "matchStrings": [
         "(?:image: )(?<depName>.*?)(?::(?<currentValue>.*?))?(?:@(?<currentDigest>sha256:[a-f0-9]+))?\\n"
       ],
@@ -21,7 +21,7 @@
         "docker"
       ],
       "matchPaths": [
-        "**/docker-compose.yml.j2"
+        "**/main.yml"
       ]
     }
   ]
