@@ -58,9 +58,6 @@
       REDIS_PORT: 6379
       API_SIGNER: remote
       API_SIGNER_URL: http://proxitok-signer:8080/signature
-    depends_on:
-      - proxitok-redis
-      - proxitok-signer
     security_opts:
       - no-new-privileges:true
     cap_drop:
