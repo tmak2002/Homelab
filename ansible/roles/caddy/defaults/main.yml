@@ -1,1 +1,1 @@
-caddy_image: "caddy:2.8.4-alpine"
+caddy_image: caddy:2.8.4-alpine
