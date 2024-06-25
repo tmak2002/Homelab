@@ -35,7 +35,7 @@
 - name: Setup caddy
   community.docker.docker_container:
     name: caddy
-    image: {{ caddy_image }}
+    image: "{{ caddy_image }}"
     pull: true
     restart_policy: unless-stopped
     ports:
