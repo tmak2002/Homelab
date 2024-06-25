@@ -1,12 +1,4 @@
 ---
-- name: Create pihole directory
-  ansible.builtin.file:
-    path: /opt/pihole
-    state: directory
-    mode: "0755"
-  tags:
-    - setup
-
 - name: Create pihole data directory
   ansible.builtin.file:
     path: /srv/pihole
@@ -23,10 +15,19 @@
   tags:
     - setup
 
-- name: Setup pihole
+- name: Create dns network
+  community.docker.docker_network:
+    name: dns
+    state: present
+    ipam_config:
+      - subnet: 10.2.0.0/24
+  tags:
+    - setup
+
+- name: Setup unbound conf
   ansible.builtin.template:
-    src: compose.yml.j2
-    dest: /opt/pihole/compose.yml
+    src: unbound.conf.j2
+    dest: /srv/unbound/unbound.conf
     mode: "0644"
   notify: Restart pihole
   tags:
@@ -34,11 +35,43 @@
     - update
 
 - name: Setup unbound
-  ansible.builtin.template:
-    src: unbound.conf.j2
-    dest: /srv/unbound/unbound.conf
-    mode: "0644"
-  notify: Restart pihole
+  community.docker.docker_container:
+    name: unbound
+    image: "{{ unbound_image }}"
+    pull: true
+    restart_policy: unless-stopped
+    hostname: unbound
+    volumes:
+      - /srv/unbound:/opt/unbound/etc/unbound/
+    networks:
+      - name: dns
+        ipv4_address: 10.2.0.200
+  tags:
+    - setup
+    - update
+
+- name: Setup pihole
+  community.docker.docker_container:
+    name: pihole
+    image: "{{ pihole_image }}"
+    pull: true
+    restart_policy: unless-stopped
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+    env:
+      TZ: Europe/Berlin
+      FTLCONF_LOCAL_IPV4: 192.168.178.2
+      PIHOLE_DNS_: 10.2.0.200
+      WEBPASSWORD: "{{ pihole_password }}"
+    volumes:
+      - /srv/pihole/etc-pihole/:/etc/pihole/
+      - /srv/pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/
+    capabilities:
+      - NET_ADMIN
+    networks:
+      - name: dns
+      - name: home
   tags:
     - setup
     - update

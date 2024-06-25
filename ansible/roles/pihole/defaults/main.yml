@@ -1,0 +1,2 @@
+pihole_image: "pihole/pihole:2024.06.0"
+unbound_image: "pedantic/unbound:latest"
