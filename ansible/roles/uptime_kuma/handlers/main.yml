@@ -1,9 +1,4 @@
 ---
-- name: Restart uptime-kuma
-  ansible.builtin.shell: # noqa: command-instead-of-shell
-    chdir: /opt/uptime-kuma
-    cmd: "{{ docker_update_command }}"
-
 - name: Restart caddy
   ansible.builtin.shell: # noqa: command-instead-of-shell
     cmd: "{{ caddy_restart_command }}"

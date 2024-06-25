@@ -1,12 +1,4 @@
 ---
-- name: Create uptime-kuma directory
-  ansible.builtin.file:
-    path: /opt/uptime-kuma
-    state: directory
-    mode: "0755"
-  tags:
-    - setup
-
 - name: Create uptime-kuma data directory
   ansible.builtin.file:
     path: /srv/uptime-kuma
@@ -15,12 +7,16 @@
   tags:
     - setup
 
-- name: Setup uptime-kuma
-  ansible.builtin.template:
-    src: compose.yml.j2
-    dest: /opt/uptime-kuma/compose.yml
-    mode: "0644"
-  notify: Restart uptime-kuma
+- name: Create and start uptime-kuma container
+  community.docker.docker_container:
+    name: uptime-kuma
+    image: "{{ uptime_kuma_image }}"
+    pull: true
+    restart_policy: unless-stopped
+    volumes:
+      - /srv/uptime-kuma/data:/app/data
+    networks:
+      - name: home
   tags:
     - setup
     - update
