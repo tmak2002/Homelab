@@ -2,3 +2,6 @@
 - name: Set up FangDasKissen
   hosts: FangDasKissen
   become: true
+
+  roles:
+    - ddclient
