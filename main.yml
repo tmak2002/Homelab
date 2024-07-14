@@ -8,3 +8,4 @@
     - ddclient
     - caddy
     - authelia
+    - sftpgo
