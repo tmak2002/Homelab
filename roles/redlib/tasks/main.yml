@@ -1,0 +1,33 @@
+---
+- name: Create and start redlib container
+  community.docker.docker_container:
+    name: redlib
+    image: "{{ redlib_image }}"
+    pull: true
+    recreate: true
+    restart_policy: unless-stopped
+    user: nobody
+    read_only: true
+    cap_drop:
+      - ALL
+    networks:
+      - name: services
+    security_opts:
+      - no-new-privileges:true
+    healthcheck:
+      test: [CMD, wget, --spider, -q, --tries=1, http://localhost:8080/settings]
+      interval: 5m
+      timeout: 3s
+  tags:
+    - setup
+    - update
+
+- name: Update caddy config
+  ansible.builtin.template:
+    src: redlib.j2
+    dest: /srv/caddy/sites/redlib
+    mode: "0644"
+  notify: Restart caddy
+  tags:
+    - setup
+    - update
