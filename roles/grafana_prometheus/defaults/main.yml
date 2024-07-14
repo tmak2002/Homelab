@@ -1,5 +1,5 @@
 ---
-cadvisor_image: gcr.io/cadvisor/cadvisor:v0.49.1 # noqa: var-naming[no-role-prefix]
-nodeexporter_image: prom/node-exporter:v1.8.2 # noqa: var-naming[no-role-prefix]
-prometheus_image: prom/prometheus:v2.53.1 # noqa: var-naming[no-role-prefix]
-grafana_image: grafana/grafana:9.5.20 # noqa: var-naming[no-role-prefix]
+cadvisor_image: gcr.io/cadvisor/cadvisor:v0.49.1
+nodeexporter_image: prom/node-exporter:v1.8.2 
+prometheus_image: prom/prometheus:v2.53.1
+grafana_image: grafana/grafana:9.5.20
