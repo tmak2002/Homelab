@@ -16,3 +16,4 @@
     - linkding
     - pihole
     - uptime_kuma
+    - grafana_prometheus
