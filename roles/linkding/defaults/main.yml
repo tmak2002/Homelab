@@ -1,2 +1,2 @@
 ---
-linkding_image: sissbruecker/linkding:latest
+linkding_image: sissbruecker/linkding:1.31.0-alpine
