@@ -5,21 +5,31 @@ ssl=yes 				            # use ssl-support.  Works with
 use=web, web=api.ipify.org
 
 # authelia
-protocol=cloudns, \
-dynurl={{ authelia_ddns }}, \
+protocol=cloudns
+dynurl={{ authelia_ddns }}
 auth.{{ domain }}
 
 # sftpgo
-protocol=cloudns, \
+protocol=cloudns
 dynurl={{ sftpgo_ddns }}
 sftpgo.{{ domain }}
 
 # AnonymousOverflow
-protocol=cloudns, \
+protocol=cloudns
 dynurl={{ anonymousoverflow_ddns }}
 overflow.{{ domain }}
 
 # redlib
-protocol=cloudns, \
+protocol=cloudns
 dynurl={{ redlib_ddns }}
 redlib.{{ domain }}
+
+# proxitok
+protocol=cloudns
+dynurl={{ proxitok_ddns }}
+proxitok.{{ domain }}
+
+# searxng
+protocol=cloudns
+dynurl={{ searxng_ddns }}
+searxng.{{ domain }}

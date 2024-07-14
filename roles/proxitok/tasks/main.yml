@@ -1,0 +1,87 @@
+---
+- name: Create proxitok network
+  community.docker.docker_network:
+    name: proxitok
+    state: present
+  tags:
+    - setup
+
+- name: Create and start signer container
+  community.docker.docker_container:
+    name: proxitok-signer
+    image: "{{ proxitok_signer_image }}"
+    pull: true
+    recreate: true
+    restart_policy: unless-stopped
+    user: nobody
+    read_only: true
+    security_opts:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    networks:
+      - name: proxitok
+  tags:
+    - setup
+    - update
+
+- name: Create and start redis container
+  community.docker.docker_container:
+    name: proxitok-redis
+    image: "{{ proxitok_redis_image }}"
+    pull: true
+    recreate: true
+    command: redis-server --save 60 1 --loglevel warning
+    restart_policy: unless-stopped
+    user: nobody
+    read_only: true
+    security_opts:
+      - no-new-privileges:true
+    tmpfs:
+      - /data:size=10M,mode=0770,uid=65534,gid=65534,noexec,nosuid,nodev
+    cap_drop:
+      - ALL
+    networks:
+      - name: proxitok
+  tags:
+    - setup
+    - update
+
+- name: Create and start proxitok container
+  community.docker.docker_container:
+    name: proxitok
+    image: "{{ proxitok_image }}"
+    pull: true
+    recreate: true
+    restart_policy: unless-stopped
+    env:
+      LATTE_CACHE: /cache
+      API_CACHE: redis
+      REDIS_HOST: proxitok-redis
+      REDIS_PORT: "6379"
+      API_SIGNER: remote
+      API_SIGNER_URL: http://proxitok-signer:8080/signature
+    security_opts:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    capabilities:
+      - CHOWN
+      - SETGID
+      - SETUID
+    networks:
+      - name: services
+      - name: proxitok
+  tags:
+    - setup
+    - update
+
+- name: Update caddy config
+  ansible.builtin.template:
+    src: proxitok.j2
+    dest: /srv/caddy/sites/proxitok
+    mode: "0644"
+  notify: Restart caddy
+  tags:
+    - setup
+    - update

@@ -1,0 +1,92 @@
+---
+- name: Create searxng data directory
+  ansible.builtin.file:
+    path: /srv/searxng
+    state: directory
+    mode: "0755"
+  tags:
+    - setup
+
+- name: Ensure searxng network exists
+  community.docker.docker_network:
+    name: searxng
+    state: present
+  tags:
+    - setup
+
+- name: Setup searxng settings
+  ansible.builtin.template:
+    src: settings.yml.j2
+    dest: /srv/searxng/settings.yml
+    mode: "0644"
+  tags:
+    - setup
+    - update
+
+- name: Setup searxng limiter
+  ansible.builtin.template:
+    src: limiter.toml.j2
+    dest: /srv/searxng/limiter.toml
+    mode: "0644"
+  tags:
+    - setup
+    - update
+
+- name: Create and start redis container
+  community.docker.docker_container:
+    name: searxng_redis
+    image: "{{ searxng_redis_image }}"
+    pull: true
+    recreate: true
+    command: valkey-server --save 30 1 --loglevel warning
+    restart_policy: unless-stopped
+    volumes:
+      - /srv/searxng/redis-data:/data
+    cap_drop:
+      - ALL
+    capabilities:
+      - CHOWN
+      - SETGID
+      - SETUID
+    networks:
+      - name: searxng
+  tags:
+    - setup
+    - update
+
+- name: Create and start searxng container
+  community.docker.docker_container:
+    name: searxng
+    image: "{{ searxng_image }}"
+    pull: true
+    recreate: true
+    restart_policy: unless-stopped
+    volumes:
+      - /srv/searxng/settings.yml:/etc/searxng/settings.yml
+      - /srv/searxng/limiter.toml:/etc/searxng/limiter.toml
+    env:
+      SEARXNG_BASE_URL: https://searxng.{{ domain }}
+      SEARXNG_REDIS_URL: redis://searxng_redis
+      SEARXNG_SECRET: "{{ searxng_secret }}"
+    cap_drop:
+      - ALL
+    capabilities:
+      - CHOWN
+      - SETGID
+      - SETUID
+    networks:
+      - name: services
+      - name: searxng
+  tags:
+    - setup
+    - update
+
+- name: Update caddy config
+  ansible.builtin.template:
+    src: searxng.j2
+    dest: /srv/caddy/sites/searxng
+    mode: "0644"
+  notify: Restart caddy
+  tags:
+    - setup
+    - update

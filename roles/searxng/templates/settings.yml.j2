@@ -1,0 +1,167 @@
+use_default_settings: true
+general:
+  debug: false
+  instance_name: "{{ searxng_instance_name }}"
+  privacypolicy_url: {{ searxng_privacypolicy_url }}
+  donation_url: {{ searxng_donation_url }}
+  contact_url: {{ searxng_contact_url }}
+  enable_metrics: true
+server:
+  # base_url is defined in the SEARXNG_BASE_URL environment variable, see .env and docker-compose.yml
+  secret_key: "{{ searxng_secret }}"  # change this!
+  limiter: true # can be disabled for a private instance
+  image_proxy: true
+  method: "GET"
+  public_instance: true
+ui:
+  static_use_hash: false
+  query_in_title: true
+  infinite_scroll: true
+  default_theme: simple
+  center_alignment: true
+  default_locale: "en"
+  results_on_new_tab: true
+  theme_args:
+    simple_style: auto
+search:
+  # Filter results. 0: None, 1: Moderate, 2: Strict
+  safe_search: 1
+  # Default search language - leave blank to detect from browser information or
+  # use codes from 'languages.py'
+  default_lang: "en"
+  # ban time in seconds after engine errors
+  ban_time_on_fail: 5
+  # max ban time in seconds after engine errors
+  max_ban_time_on_fail: 120
+  suspended_times:
+    # Engine suspension time after error (in seconds; set to 0 to disable)
+    # For error "Access denied" and "HTTP error [402, 403]"
+    SearxEngineAccessDenied: 86400
+    # For error "CAPTCHA"
+    SearxEngineCaptcha: 86400
+    # For error "Too many request" and "HTTP error 429"
+    SearxEngineTooManyRequests: 3600
+    # Cloudflare CAPTCHA
+    cf_SearxEngineCaptcha: 1296000
+    cf_SearxEngineAccessDenied: 86400
+    # ReCAPTCHA
+    recaptcha_SearxEngineCaptcha: 604800
+  formats:
+    - html
+    - csv
+    - json
+    - rss
+outgoing:
+  enable_http2: true
+enabled_plugins:
+  - 'Hash plugin'
+  - 'Self Information'
+  - 'Tracker URL remover'
+  - 'Open Access DOI rewrite'
+  - 'Vim-like hotkeys'
+  - 'Tor check plugin'
+  - 'Search on category select'
+engines:
+  - name: google
+    use_mobile_ui: true
+    disabled: false
+  - name: bing
+    engine: bing
+    shortcut: bi
+    disabled: false
+  - name: duckduckgo
+    engine: duckduckgo
+    shortcut: ddg
+    disabled: true  # DDG is useless since it just scrapes bing for results anyway
+  - name: wikiquote
+    engine: mediawiki
+    shortcut: wq
+    categories: general
+    base_url: "https://{language}.wikiquote.org/"
+    number_of_results: 5
+    search_type: text
+    about:
+      website: https://www.wikiquote.org/
+      wikidata_id: Q369
+    disabled: false
+  - name: brave
+    shortcut: brave
+    engine: xpath
+    paging: true
+    time_range_support: true
+    first_page_num: 0
+    time_range_url: "&tf={time_range_val}"
+    search_url: https://search.brave.com/search?q={query}&offset={pageno}&spellcheck=1{time_range}
+    url_xpath: //a[@class="result-header"]/@href
+    title_xpath: //span[@class="snippet-title"]
+    content_xpath: //p[1][@class="snippet-description"]
+    suggestion_xpath: //div[@class="text-gray h6"]/a
+    time_range_map:
+      day: 'pd'
+      week: 'pw'
+      month: 'pm'
+      year: 'py'
+    categories: [general, web]
+    headers:
+      Accept-Encoding: gzip, deflate
+    about:
+      website: https://brave.com/search/
+      wikidata_id: Q107355971
+      use_official_api: false
+      require_api_key: false
+      results: HTML
+    disabled: false
+  - name: codeberg
+    engine: json_engine
+    search_url: https://codeberg.org/api/v1/repos/search?q={query}&limit=10
+    url_query: html_url
+    title_query: name
+    content_query: description
+    categories: [it, repos]
+    shortcut: cb
+    about:
+      website: https://codeberg.org/
+      wikidata_id:
+      official_api_documentation: https://try.gitea.io/api/swagger
+      use_official_api: false
+      require_api_key: false
+      results: JSON
+    disabled: false
+  - name: gitlab
+    engine: json_engine
+    paging: true
+    search_url: https://gitlab.com/api/v4/projects?search={query}&page={pageno}
+    url_query: web_url
+    title_query: name_with_namespace
+    content_query: description
+    page_size: 20
+    categories: [it, repos]
+    shortcut: gl
+    timeout: 10.0
+    about:
+      website: https://about.gitlab.com/
+      wikidata_id: Q16639197
+      official_api_documentation: https://docs.gitlab.com/ee/api/
+      use_official_api: false
+      require_api_key: false
+      results: JSON
+    disabled: false
+  - name: sourcehut
+    shortcut: srht
+    engine: xpath
+    paging: true
+    search_url: https://sr.ht/projects?page={pageno}&search={query}
+    results_xpath: (//div[@class="event-list"])[1]/div[@class="event"]
+    url_xpath: ./h4/a[2]/@href
+    title_xpath: ./h4/a[2]
+    content_xpath: ./p
+    first_page_num: 1
+    categories: [it, repos]
+    disabled: false
+    about:
+      website: https://sr.ht
+      wikidata_id: Q78514485
+      official_api_documentation: https://man.sr.ht/
+      use_official_api: false
+      require_api_key: false
+      results: HTML

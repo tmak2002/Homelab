@@ -1,0 +1,5 @@
+proxitok.{{ domain }} {
+  import disable_log
+  import headers
+  reverse_proxy proxitok:8080
+}
