@@ -2,9 +2,14 @@ daemon=600				            # check every 600 seconds
 syslog=yes				            # log update msgs to syslog
 pid=/var/run/ddclient/ddclient.pid	# record PID in file.
 ssl=yes 				            # use ssl-support.  Works with
-use=web, web=checkip.dyndns.org
+use=web, web=api.ipify.org
 
 # authelia
 protocol=cloudns, \
 dynurl={{ authelia_ddns }}, \
 auth.{{ domain }}
+
+# sftpgo
+protocol=cloudns, \
+dynurl={{ sftpgo_ddns }}
+sftpgo.{{ domain }}
