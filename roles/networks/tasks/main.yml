@@ -1,7 +1,6 @@
 ---
 - name: Create networks
   community.docker.docker_network:
-    name:
-      - core
+    name: core
   tags:
     - setup
