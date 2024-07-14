@@ -16,3 +16,9 @@
     name: tools
   tags:
     - setup
+
+- name: Create monitoring network
+  community.docker.docker_network:
+    name: monitoring
+  tags:
+    - setup
