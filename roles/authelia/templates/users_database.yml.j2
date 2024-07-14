@@ -1,0 +1,19 @@
+# yamllint disable rule:line-length
+---
+###############################################################
+#                         Users Database                      #
+###############################################################
+
+# This file can be used if you do not have an LDAP set up.
+
+users:
+  torben:
+    disabled: false
+    displayname: "Torben"
+    password: {{ authelia_password }}
+    email: torben@tmak2002.dev
+    groups:
+      - admins
+      - dev
+...
+# yamllint enable rule:line-length

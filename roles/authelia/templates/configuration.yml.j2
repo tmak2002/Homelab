@@ -1,0 +1,110 @@
+# yamllint disable rule:comments-indentation
+---
+###############################################################################
+##                           Authelia Configuration                          ##
+###############################################################################
+theme: 'auto'
+
+server:
+  endpoints:
+    authz:
+      forward-auth:
+        implementation: 'ForwardAuth'
+
+log:
+  level: 'debug'
+
+telemetry:
+  metrics:
+    enabled: false
+
+totp:
+  disable: false
+
+webauthn:
+  disable: false
+
+identity_validation:
+  reset_password:
+    jwt_secret: '{{ authelia_jwt_secret }}'
+
+authentication_backend:
+  password_reset:
+    disable: false
+
+  file:
+    path: '/config/users_database.yml'
+    watch: false
+    search:
+      email: false
+      case_insensitive: false
+    password:
+      algorithm: 'argon2'
+      argon2:
+        variant: 'argon2id'
+        iterations: 3
+        memory: 65536
+        parallelism: 4
+        key_length: 32
+        salt_length: 16
+      scrypt:
+        iterations: 16
+        block_size: 8
+        parallelism: 1
+        key_length: 32
+        salt_length: 16
+      pbkdf2:
+        variant: 'sha512'
+        iterations: 310000
+        salt_length: 16
+      sha2crypt:
+        variant: 'sha512'
+        iterations: 50000
+        salt_length: 16
+      bcrypt:
+        variant: 'standard'
+        cost: 12
+
+password_policy:
+  standard:
+    enabled: false
+    min_length: 8
+    max_length: 0
+    require_uppercase: true
+    require_lowercase: true
+    require_number: true
+    require_special: true
+  zxcvbn:
+    enabled: false
+    min_score: 3
+
+privacy_policy:
+  enabled: false
+  require_user_acceptance: false
+  policy_url: ''
+
+access_control:
+  default_policy: 'one_factor'
+
+session:
+  cookies:
+    - domain: 'tmak2002.de'
+      authelia_url: 'https://auth.tmak2002.de'
+
+  name: 'authelia_session'
+  same_site: 'lax'
+  inactivity: '5m'
+  expiration: '1h'
+  remember_me: '1M'
+
+storage:
+  encryption_key: '{{ authelia_encryption_key }}'
+
+  local:
+    path: '/config/db.sqlite3'
+
+notifier:
+  disable_startup_check: true
+
+  filesystem:
+    filename: '/config/notification.txt'
