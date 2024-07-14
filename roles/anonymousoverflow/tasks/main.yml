@@ -1,0 +1,31 @@
+---
+- name: Setup anonymousoverflow
+  community.docker.docker_container:
+    name: anonymousoverflow
+    image: "{{ anonymousoverflow_image }}"
+    pull: true
+    recreate: true
+    env:
+      APP_URL: overflow.{{ domain }}
+      JWT_SIGNING_SECRET: "{{ anonymousoverflow_secret }}"
+    restart_policy: unless-stopped
+    read_only: true
+    security_opts:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    networks:
+      - name: services
+  tags:
+    - setup
+    - update
+
+- name: Update caddy config
+  ansible.builtin.template:
+    src: overflow.j2
+    dest: /srv/caddy/sites/overflow
+    mode: "0644"
+  notify: Restart caddy
+  tags:
+    - setup
+    - update

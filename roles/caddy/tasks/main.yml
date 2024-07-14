@@ -51,7 +51,6 @@
     networks:
       - name: core
       - name: services
-      - name: home
   tags:
     - setup
     - update
