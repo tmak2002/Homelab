@@ -10,3 +10,9 @@
     name: services
   tags:
     - setup
+
+- name: Create tools network
+  community.docker.docker_network:
+    name: tools
+  tags:
+    - setup

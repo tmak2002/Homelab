@@ -51,6 +51,7 @@
     networks:
       - name: core
       - name: services
+      - name: tools
   tags:
     - setup
     - update

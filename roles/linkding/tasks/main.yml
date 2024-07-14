@@ -1,0 +1,35 @@
+---
+- name: Create linkding data directory
+  ansible.builtin.file:
+    path: /srv/linkding
+    state: directory
+    mode: "0755"
+  tags:
+    - setup
+
+- name: Create and start linkding container
+  community.docker.docker_container:
+    name: linkding
+    image: "{{ linkding_image }}"
+    pull: true
+    recreate: true
+    restart_policy: unless-stopped
+    env:
+      LD_CSRF_TRUSTED_ORIGINS: https://linkding.tmak2002.de
+    volumes:
+      - /srv/linkding:/etc/linkding/data
+    networks:
+      - name: tools
+  tags:
+    - setup
+    - update
+
+- name: Update caddy config
+  ansible.builtin.template:
+    src: linkding.j2
+    dest: /srv/caddy/sites/linkding
+    mode: "0644"
+  notify: Restart caddy
+  tags:
+    - setup
+    - update
