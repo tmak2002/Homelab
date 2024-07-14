@@ -1,0 +1,55 @@
+---
+- name: Create caddy data directory
+  ansible.builtin.file:
+    path: /srv/caddy
+    state: directory
+    mode: "0755"
+  tags:
+    - setup
+
+- name: Create ftp directory
+  ansible.builtin.file:
+    path: /srv/ftp
+    state: directory
+    mode: "0755"
+  tags:
+    - setup
+
+- name: Setup Caddyfile
+  ansible.builtin.template:
+    src: Caddyfile.j2
+    dest: /srv/caddy/Caddyfile
+    mode: "0644"
+  tags:
+    - setup
+    - update
+
+- name: Setup caddy
+  community.docker.docker_container:
+    name: caddy
+    image: "{{ caddy_image }}"
+    pull: true
+    recreate: true
+    restart_policy: unless-stopped
+    ports:
+      - 80:80
+      - 443:443
+      - 443:443/udp
+    volumes:
+      - /srv/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - /srv/caddy/sites:/etc/caddy/sites:ro
+      - /srv/ftp:/var/www:ro
+      - /srv/caddy/data:/data:rw
+      - /srv/caddy/config:/config:rw
+    read_only: true
+    security_opts:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    capabilities:
+      - NET_BIND_SERVICE
+    networks:
+      - name: core
+  tags:
+    - setup
+    - update

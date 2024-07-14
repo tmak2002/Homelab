@@ -1,0 +1,26 @@
+(disable_log) {
+  log {
+    output discard
+  }
+}
+
+(headers) {
+   header {
+     Alt-Svc 'h3=":$server_port"; ma=86400'
+     Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+     X-Content-Type-Options nosniff
+     X-Frame-Options SAMEORIGIN
+     X-XSS-Protection "1; mode=block"
+     Permissions-Policy "accelerometer=(),ambient-light-sensor=(),autoplay=(),camera=(),encrypted-media=(),focus-without-user-activation=(),geolocation=(),gyroscope=(),magnetometer=(),microphone=(),midi=(),payment=(),picture-in-picture=(),speaker=(),sync-xhr=(),usb=(),vr=(),interest-cohort=()"
+     Referrer-Policy "no-referrer"
+     -Server
+   }
+}
+
+(disable_index) {
+  header {
+    X-Robots-Tag "noindex, noarchive, nofollow"
+  }
+}
+
+import sites/*
