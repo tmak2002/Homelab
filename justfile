@@ -12,4 +12,4 @@ lint:
 
 # run playbook
 run tags:
-    ansible-playbook main.yml -i -K --tags={{tags}}
+    ansible-playbook main.yml -K --tags={{tags}}
