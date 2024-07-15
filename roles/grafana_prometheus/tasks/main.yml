@@ -50,6 +50,8 @@
       - /cgroup:/cgroup:ro
     networks:
       - name: monitoring
+    labels:
+      org.label-schema.group: "monitoring"
   tags:
     - setup
     - update
@@ -72,6 +74,8 @@
       - /:/rootfs:ro
     networks:
       - name: monitoring
+    labels:
+      org.label-schema.group: "monitoring"
   tags:
     - setup
     - update
@@ -96,6 +100,8 @@
       - /srv/monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
     networks:
       - name: monitoring
+    labels:
+      org.label-schema.group: "monitoring"
   tags:
     - setup
     - update
@@ -116,6 +122,8 @@
       GF_USERS_ALLOW_SIGN_UP: "false"
     networks:
       - name: monitoring
+    labels:
+      org.label-schema.group: "monitoring"
   tags:
     - setup
     - update

@@ -18,6 +18,8 @@
       - /srv/uptime-kuma/data:/app/data
     networks:
       - name: monitoring
+    labels:
+      org.label-schema.group: "monitoring"
   tags:
     - setup
     - update
