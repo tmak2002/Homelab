@@ -111,7 +111,7 @@
     volumes:
       - /srv/monitoring/grafana:/var/lib/grafana
     env:
-      GF_SECURITY_ADMIN_USER: "torben"
+      GF_SECURITY_ADMIN_USER: torben
       GF_SECURITY_ADMIN_PASSWORD: "{{ grafana_password }}"
       GF_USERS_ALLOW_SIGN_UP: "false"
     networks:

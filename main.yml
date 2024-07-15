@@ -17,3 +17,4 @@
     - pihole
     - uptime_kuma
     - grafana_prometheus
+    - syncthing

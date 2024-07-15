@@ -1,0 +1,50 @@
+---
+- name: Create syncthing data directory
+  ansible.builtin.file:
+    path: /srv/syncthing
+    state: directory
+    mode: "0755"
+  tags:
+    - setup
+
+- name: Create syncthing config directory
+  ansible.builtin.file:
+    path: /srv/syncthing/config
+    state: directory
+    mode: "0755"
+  tags:
+    - setup
+
+- name: Create and start syncthing container
+  community.docker.docker_container:
+    name: syncthing
+    image: "{{ syncthing_image }}"
+    pull: true
+    recreate: true
+    restart_policy: unless-stopped
+    ports:
+      - 22000:22000/tcp
+      - 22000:22000/udp
+      - 21027:21027/udp
+    volumes:
+      - /srv/syncthing/config:/config
+      - /psrv/syncthing:/data
+    env:
+      PUID: "1000"
+      PGID: "1000"
+      TZ: "{{ timezone }}"
+    networks:
+      - name: tools
+  tags:
+    - setup
+    - update
+
+- name: Update caddy config
+  ansible.builtin.template:
+    src: syncthing.j2
+    dest: /srv/caddy/sites/syncthing
+    mode: "0644"
+  notify: Restart caddy
+  tags:
+    - setup
+    - update

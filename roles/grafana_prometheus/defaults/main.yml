@@ -1,5 +1,5 @@
 ---
 cadvisor_image: gcr.io/cadvisor/cadvisor:v0.49.1
-nodeexporter_image: prom/node-exporter:v1.8.2 
+nodeexporter_image: prom/node-exporter:v1.8.2
 prometheus_image: prom/prometheus:v2.53.1
 grafana_image: grafana/grafana:11.1.0
