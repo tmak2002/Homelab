@@ -1,0 +1,11 @@
+{
+          "branches": ["main"],
+          "plugins": [
+            ["@semantic-release/commit-analyzer",{"preset":"eslint"}],
+            ["@semantic-release/release-notes-generator",{"preset":"eslint"}],
+            "@semantic-release/changelog",
+            ["@semantic-release/git",{"assets":["CHANGELOG.md"]}],
+            "@semantic-release/github",
+            ["@semantic-release/exec",{"prepareCmd": ${{ inputs.pre-release-script }}}]
+          ]
+        }
