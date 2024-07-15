@@ -1,0 +1,8 @@
+dozzle.{{ domain }} {
+  import headers
+  forward_auth authelia:9091 {
+    uri /api/authz/forward-auth
+    copy_headers Remote-User Remote-Groups Remote-Email Remote-Name
+  }
+  reverse_proxy dozzle:8080
+}

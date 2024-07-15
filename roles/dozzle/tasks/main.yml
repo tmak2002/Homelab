@@ -1,21 +1,13 @@
 ---
-- name: Create uptime-kuma data directory
-  ansible.builtin.file:
-    path: /srv/uptime-kuma
-    state: directory
-    mode: "0755"
-  tags:
-    - setup
-
-- name: Create and start uptime-kuma container
+- name: Create and start dozzle container
   community.docker.docker_container:
-    name: uptime-kuma
-    image: "{{ uptime_kuma_image }}"
+    name: dozzle
+    image: "{{ dozzle_image }}"
     pull: true
     recreate: true
     restart_policy: unless-stopped
     volumes:
-      - /srv/uptime-kuma/data:/app/data
+      - /var/run/docker.sock:/var/run/docker.sock:ro
     networks:
       - name: monitoring
     labels:
@@ -26,8 +18,8 @@
 
 - name: Update caddy config
   ansible.builtin.template:
-    src: uptime-kuma.j2
-    dest: /srv/caddy/sites/uptime-kuma
+    src: dozzle.j2
+    dest: /srv/caddy/sites/dozzle
     mode: "0644"
   notify: Restart caddy
   tags:
