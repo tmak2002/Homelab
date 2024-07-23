@@ -19,3 +19,4 @@
     - grafana_prometheus
     - syncthing
     - dozzle
+    - netdata
