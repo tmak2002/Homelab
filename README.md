@@ -23,4 +23,4 @@ use this command to see all avaible options.
 | DNS | [Pi-hole](https://pi-hole.net/), [unbound](https://www.nlnetlabs.nl/projects/unbound/) |
 | Tools | [linkding](https://github.com/sissbruecker/linkding), [syncthing](https://syncthing.net/) |
 | Services | [AnonymousOverflow](https://github.com/httpjamesm/AnonymousOverflow), [ProxiTok](https://github.com/pablouser1/ProxiTok), [Redlib](https://github.com/redlib-org/redlib), [SearXNG](https://github.com/searxng/searxng) |
-| Monitoring | [Uptime Kuma](https://github.com/louislam/uptime-kuma), [grafana](https://grafana.com/), [Dozzle](https://dozzle.dev/) |
+| Monitoring | [Uptime Kuma](https://github.com/louislam/uptime-kuma), [netdata](https://github.com/netdata/netdata), [Dozzle](https://dozzle.dev/) |
