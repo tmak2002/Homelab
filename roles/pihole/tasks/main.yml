@@ -42,8 +42,10 @@
     recreate: true
     restart_policy: unless-stopped
     hostname: unbound
-    volumes:
-      - /srv/unbound:/opt/unbound/etc/unbound/
+    env:
+      TZ: "{{ timezone }}"
+      UNBOUND_UID: "1000"
+      UNBOUND_GID: "1000"
     networks:
       - name: dns
         ipv4_address: 10.2.0.200
@@ -64,7 +66,7 @@
     env:
       TZ: "{{ timezone }}"
       FTLCONF_LOCAL_IPV4: 192.168.178.2
-      PIHOLE_DNS_: 10.2.0.200
+      PIHOLE_DNS_: 10.2.0.200#5335
       WEBPASSWORD: "{{ pihole_password }}"
     volumes:
       - /srv/pihole/etc-pihole/:/etc/pihole/
