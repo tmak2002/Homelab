@@ -28,7 +28,7 @@
       - 21027:21027/udp
     volumes:
       - /srv/syncthing/config:/config
-      - /psrv/syncthing:/data
+      - /srv/syncthing:/data
     env:
       PUID: "1000"
       PGID: "1000"
