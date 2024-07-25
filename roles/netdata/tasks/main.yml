@@ -19,7 +19,7 @@
       - /dev/kmsg:/dev/kmsg
     volumes:
       - /srv/netdata/config:/etc/netdata
-      - /srv/netdata/lib:/var/lib/netdata 
+      - /srv/netdata/lib:/var/lib/netdata
       - /srv/netdata/cache:/var/cache/netdata
       - /:/host/root:ro,rslave
       - /etc/passwd:/host/etc/passwd:ro
@@ -34,7 +34,7 @@
       - SYS_PTRACE
       - SYS_ADMIN
     cap_drop:
-        - ALL
+      - ALL
     networks:
       - name: monitoring
     labels:
