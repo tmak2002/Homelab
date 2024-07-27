@@ -6,6 +6,7 @@
     mode: "0755"
   tags:
     - setup
+    - setup-netdata
 
 - name: Create and start netdata container
   community.docker.docker_container:
@@ -42,6 +43,8 @@
   tags:
     - setup
     - update
+    - setup-netdata
+    - update-netdata
 
 - name: Update caddy config
   ansible.builtin.template:
@@ -52,3 +55,5 @@
   tags:
     - setup
     - update
+    - setup-netdata
+    - update-netdata

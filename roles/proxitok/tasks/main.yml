@@ -5,6 +5,7 @@
     state: present
   tags:
     - setup
+    - setup-proxitok
 
 - name: Create and start signer container
   community.docker.docker_container:
@@ -24,6 +25,8 @@
   tags:
     - setup
     - update
+    - setup-proxitok
+    - update-proxitok
 
 - name: Create and start redis container
   community.docker.docker_container:
@@ -46,6 +49,8 @@
   tags:
     - setup
     - update
+    - setup-proxitok
+    - update-proxitok
 
 - name: Create and start proxitok container
   community.docker.docker_container:
@@ -75,6 +80,8 @@
   tags:
     - setup
     - update
+    - setup-proxitok
+    - update-proxitok
 
 - name: Update caddy config
   ansible.builtin.template:
@@ -85,3 +92,5 @@
   tags:
     - setup
     - update
+    - setup-proxitok
+    - update-proxitok

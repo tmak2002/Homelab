@@ -8,6 +8,7 @@
     group: 1000
   tags:
     - setup
+    - setup-syncthing
 
 - name: Create syncthing config directory
   ansible.builtin.file:
@@ -18,6 +19,7 @@
     mode: "0755"
   tags:
     - setup
+    - setup-syncthing
 
 - name: Create and start syncthing container
   community.docker.docker_container:
@@ -42,6 +44,8 @@
   tags:
     - setup
     - update
+    - setup-syncthing
+    - update-syncthing
 
 - name: Update caddy config
   ansible.builtin.template:
@@ -52,3 +56,5 @@
   tags:
     - setup
     - update
+    - setup-syncthing
+    - update-syncthing

@@ -6,6 +6,7 @@
     mode: "0755"
   tags:
     - setup
+    - setup-searxng
 
 - name: Ensure searxng network exists
   community.docker.docker_network:
@@ -13,6 +14,7 @@
     state: present
   tags:
     - setup
+    - setup-searxng
 
 - name: Setup searxng settings
   ansible.builtin.template:
@@ -22,6 +24,8 @@
   tags:
     - setup
     - update
+    - setup-searxng
+    - update-searxng
 
 - name: Setup searxng limiter
   ansible.builtin.template:
@@ -31,6 +35,8 @@
   tags:
     - setup
     - update
+    - setup-searxng
+    - update-searxng
 
 - name: Create and start redis container
   community.docker.docker_container:
@@ -53,6 +59,8 @@
   tags:
     - setup
     - update
+    - setup-searxng
+    - update-searxng
 
 - name: Create and start searxng container
   community.docker.docker_container:
@@ -80,6 +88,8 @@
   tags:
     - setup
     - update
+    - setup-searxng
+    - update-searxng
 
 - name: Update caddy config
   ansible.builtin.template:
@@ -90,3 +100,5 @@
   tags:
     - setup
     - update
+    - setup-searxng
+    - update-searxng

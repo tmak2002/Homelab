@@ -21,6 +21,8 @@
   tags:
     - setup
     - update
+    - setup-redlib
+    - update-redlib
 
 - name: Update caddy config
   ansible.builtin.template:
@@ -31,3 +33,5 @@
   tags:
     - setup
     - update
+    - setup-redlib
+    - update-redlib

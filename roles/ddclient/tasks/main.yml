@@ -6,6 +6,7 @@
     mode: "0755"
   tags:
     - setup
+    - setup-ddclient
 
 - name: Setup ddclient.conf
   ansible.builtin.template:
@@ -15,6 +16,8 @@
   tags:
     - setup
     - update
+    - setup-ddclient
+    - update-ddclient
 
 - name: Setup ddclient
   community.docker.docker_container:
@@ -28,3 +31,5 @@
   tags:
     - setup
     - update
+    - setup-ddclient
+    - update-ddclient

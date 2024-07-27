@@ -6,6 +6,7 @@
     mode: "0755"
   tags:
     - setup
+    - setup-authelia
 
 - name: Setup configuration
   ansible.builtin.template:
@@ -15,6 +16,8 @@
   tags:
     - setup
     - update
+    - setup-authelia
+    - update-authelia
 
 - name: Setup users_database
   ansible.builtin.template:
@@ -24,6 +27,8 @@
   tags:
     - setup
     - update
+    - setup-authelia
+    - update-authelia
 
 - name: Create and start authelia container
   community.docker.docker_container:
@@ -41,6 +46,8 @@
   tags:
     - setup
     - update
+    - setup-authelia
+    - update-authelia
 
 - name: Update caddy config
   ansible.builtin.template:
@@ -51,3 +58,5 @@
   tags:
     - setup
     - update
+    - setup-authelia
+    - update-authelia

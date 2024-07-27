@@ -6,6 +6,7 @@
     mode: "0755"
   tags:
     - setup
+    - setup-caddy
 
 - name: Create ftp directory
   ansible.builtin.file:
@@ -14,6 +15,7 @@
     mode: "0755"
   tags:
     - setup
+    - setup-caddy
 
 - name: Setup Caddyfile
   ansible.builtin.template:
@@ -23,6 +25,8 @@
   tags:
     - setup
     - update
+    - setup-caddy
+    - update-caddy
 
 - name: Setup caddy
   community.docker.docker_container:
@@ -56,3 +60,5 @@
   tags:
     - setup
     - update
+    - setup-caddy
+    - update-caddy

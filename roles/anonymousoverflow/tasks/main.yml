@@ -19,6 +19,8 @@
   tags:
     - setup
     - update
+    - setup-anonymousoverflow
+    - update-anonymousoverflow
 
 - name: Update caddy config
   ansible.builtin.template:
@@ -29,3 +31,5 @@
   tags:
     - setup
     - update
+    - setup-anonymousoverflow
+    - update-anonymousoverflow
