@@ -18,6 +18,8 @@ app-template:
       className: nginx
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-prod
+        external-dns.alpha.kubernetes.io/target: homelab-tunnel.bot-tec.de
+        external-dns.alpha.kubernetes.io/cloudflare-proxied: 'true'
       hosts:
         - host: &host redlib.bot-tec.de
           paths:
