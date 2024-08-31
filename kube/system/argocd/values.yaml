@@ -38,7 +38,8 @@ argocd-apps:
             repoURL: &repoURL https://github.com/tmak2002/Homelab.git
             revision: &revision v3-dev
             directories:
-              - path: kube/*
+              - path: kube/system/*
+              - path: kube/apps/*
       template:
         metadata:
           name: '{{path.basename}}'
