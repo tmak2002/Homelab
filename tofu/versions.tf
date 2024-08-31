@@ -21,3 +21,7 @@ provider "cloudflare" {
   email   = var.cloudflare_email
   api_key = var.cloudflare_api_key
 }
+
+provider "kubernetes" {
+  config_path    = "/etc/rancher/k3s/k3s.yaml"
+}
