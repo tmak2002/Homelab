@@ -1,3 +1,3 @@
 ---
 searxng_redis_image: valkey/valkey:7-alpine
-searxng_image: searxng/searxng@sha256:33aa7147c91e7b0724f37c79f4a040b8ff27e1e97186d55012189c58f79ba190
+searxng_image: searxng/searxng@sha256:dd54a2f48652eb28b4096b57c5da5cf160ae3e6c411ef96009dddbecd2c04a77
