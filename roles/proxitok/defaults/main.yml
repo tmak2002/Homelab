@@ -1,4 +1,4 @@
 ---
 proxitok_image: ghcr.io/pablouser1/proxitok:latest@sha256:53537d2c9f816c313a13f232d728175e1932d9d59145ffc33f26387d81c69fc6
-proxitok_redis_image: redis:7.4.0-alpine
+proxitok_redis_image: redis:7.4.1-alpine
 proxitok_signer_image: ghcr.io/pablouser1/signtok:latest@sha256:c55ed70b17ebd4a237c2bbbea71579c4800c89ad4c15a1e6e2060006378a353f
