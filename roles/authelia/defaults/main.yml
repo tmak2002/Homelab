@@ -1,2 +1,2 @@
 ---
-authelia_image: authelia/authelia:4.38.15
+authelia_image: authelia/authelia:4.38.16
