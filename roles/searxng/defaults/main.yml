@@ -1,3 +1,3 @@
 ---
 searxng_redis_image: valkey/valkey:8-alpine
-searxng_image: searxng/searxng@sha256:e213852d24f45dc0b04755eaeecfa09a44122ad88310ef37ded6d5032d9d571d
+searxng_image: searxng/searxng@sha256:ad17c9cd62cae7b550dea5a5f337eb5d6374d7cea58fee39e8a53eea8d514772
