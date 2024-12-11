@@ -1,0 +1,37 @@
+services:
+  caddy:
+    image: pihole/pihole:2024.07.0
+    ports:
+      - 53:53/tcp
+      - 53:53/udp
+    networks:
+      - core
+    volumes:
+      - pihole_data/:/etc/pihole/
+      - dnsmasq_data/:/etc/dnsmasq.d/
+    capabilities:
+      - NET_ADMIN
+    secrets:
+      - pihole_pwd
+    environment:
+      - TZ=Europe/Berlin
+      - FTLCONF_LOCAL_IPV4=192.168.178.2
+      - WEBPASSWORD=/run/secrets/pihole_pwd
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+      replicas: 1
+      restart_policy:
+        condition: any
+      labels:
+        caddy: pihole.local
+        caddy.reverse_proxy: "{{upstreams 80}}"
+
+networks:
+  core:
+    external: true
+
+volumes:
+  pihole_data: {}
+  dnsmasq_data: {}
