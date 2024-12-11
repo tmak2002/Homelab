@@ -1,6 +1,5 @@
 services:
   caddy:
-    container_name: caddy
     image: lucaslorentz/caddy-docker-proxy:ci-alpine
     ports:
       - 80:80
@@ -24,7 +23,7 @@ services:
 
 networks:
   core:
-    driver: overlay
+    external: true
 
 volumes:
   caddy_data: {}
