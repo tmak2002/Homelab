@@ -1,1 +1,2 @@
 docker network create --driver overlay core
+echo "your-secret-password" | docker secret create pihole_pwd -
