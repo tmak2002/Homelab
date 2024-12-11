@@ -9,7 +9,6 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - caddy_data:/data
-    restart: unless-stopped
     deploy:
       labels:
         caddy.email: torben@tmak2002.dev
