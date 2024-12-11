@@ -83,4 +83,4 @@ secrets:
   firefly_db_pwd:
     external: true
   firefly_cron:
-    external:true
+    external: true
