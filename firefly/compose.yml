@@ -13,10 +13,10 @@ services:
     environment:
       - APP_ENV=production
       - SITE_OWNER=torben@tmak2002.dev
-      - APP_KEY=/var/secrets/firefly_app_key
+      - APP_KEY=/run/secrets/firefly_app_key
       - TRUSTED_PROXIES=**
-      - DB_PASSWORD=/var/secrets/firefly_db_pwd
-      - STATIC_CRON_TOKEN=/var/secrets/firefly_cron
+      - DB_PASSWORD=/run/secrets/firefly_db_pwd
+      - STATIC_CRON_TOKEN=/run/secrets/firefly_cron
     deploy:
       placement:
         constraints:
@@ -39,7 +39,7 @@ services:
     environment:
       - MYSQL_RANDOM_ROOT_PASSWORD=yes
       - MYSQL_USER=firefly
-      - MYSQL_PASSWORD=/var/secrets/firefly_db_pwd
+      - MYSQL_PASSWORD=/run/secrets/firefly_db_pwd
       - MYSQL_DATABASE=firefly
     deploy:
       placement:
