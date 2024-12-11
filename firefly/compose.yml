@@ -1,0 +1,86 @@
+services:
+  firefly:
+    image: fireflyiii/core:latest
+    volumes:
+      - firefly_data:/var/www/html/storage/upload
+    networks:
+      - firefly
+      - core
+    secrets:
+      - firefly_app_key
+      - firefly_db_pwd
+      - firefly_cron
+    environment:
+      - APP_ENV=production
+      - SITE_OWNER=torben@tmak2002.dev
+      - APP_KEY=/var/secrets/firefly_app_key
+      - TRUSTED_PROXIES=**
+      - DB_PASSWORD=/var/secrets/firefly_db_pwd
+      - STATIC_CRON_TOKEN=/var/secrets/firefly_cron
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+      replicas: 1
+      restart_policy:
+        condition: any
+      labels:
+        caddy: firefly.local
+        caddy.reverse_proxy: "{{upstreams 80}}"
+
+  db:
+    image: mariadb:lts
+    networks:
+      - firefly
+    volumes:
+      - firefly_db:/var/lib/mysql
+    secrets:
+      - firefly_db_pwd
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+      - MYSQL_USER=firefly
+      - MYSQL_PASSWORD=/var/secrets/firefly_db_pwd
+      - MYSQL_DATABASE=firefly
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+      replicas: 1
+      restart_policy:
+        condition: any
+
+
+  cron:
+    #
+    # To make this work, set STATIC_CRON_TOKEN in your .env file or as an environment variable and replace REPLACEME below
+    # The STATIC_CRON_TOKEN must be *exactly* 32 characters long
+    #
+    image: alpine
+    command: sh -c "echo \"0 3 * * * wget -qO- http://app:8080/api/v1/cron/ahw3usahC4eeDeihaequaeshohchev6c;echo\" | crontab - && crond -f -L /dev/stdout"
+    networks:
+      - firefly
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+      replicas: 1
+      restart_policy:
+        condition: any
+
+networks:
+  firefly:
+    name: firefly
+  core:
+    external: true
+
+volumes:
+  firefly_data: {}
+  firefly_db: {}
+
+secrets:
+  firefly_app_key:
+    external: true
+  firefly_db_pwd:
+    external: true
+  firefly_cron:
+    external:true
