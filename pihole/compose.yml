@@ -33,3 +33,7 @@ networks:
 volumes:
   pihole_data: {}
   dnsmasq_data: {}
+
+secrets:
+  pihole_pwd:
+    external: true
