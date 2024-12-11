@@ -14,7 +14,7 @@ services:
     environment:
       - TZ=Europe/Berlin
       - FTLCONF_LOCAL_IPV4=192.168.178.2
-      - WEBPASSWORD=/run/secrets/pihole_pwd
+      - WEBPASSWORD_FILE=/run/secrets/pihole_pwd
     deploy:
       placement:
         constraints:
