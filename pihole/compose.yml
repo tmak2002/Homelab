@@ -7,8 +7,8 @@ services:
     networks:
       - core
     volumes:
-      - pihole_data/:/etc/pihole/
-      - dnsmasq_data/:/etc/dnsmasq.d/
+      - pihole_data:/etc/pihole/
+      - dnsmasq_data:/etc/dnsmasq.d/
     secrets:
       - pihole_pwd
     environment:
