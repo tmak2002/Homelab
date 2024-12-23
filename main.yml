@@ -5,17 +5,4 @@
 
   roles:
     - networks
-    - ddclient
-    - caddy
-    - authelia
-    - sftpgo
-    - anonymousoverflow
-    - redlib
-    - proxitok
-    - searxng
-    - linkding
-    - pihole
-    - uptime_kuma
-    - syncthing
-    - dozzle
-    - komga
+    - traefik
