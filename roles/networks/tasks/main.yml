@@ -1,24 +1,13 @@
 ---
-- name: Create core network
+- name: Create networks
   community.docker.docker_network:
-    name: core
-  tags:
-    - setup
-
-- name: Create services network
-  community.docker.docker_network:
-    name: services
-  tags:
-    - setup
-
-- name: Create tools network
-  community.docker.docker_network:
-    name: tools
-  tags:
-    - setup
-
-- name: Create monitoring network
-  community.docker.docker_network:
-    name: monitoring
+    name: "{{ item.name }}"
+    state: present
+    driver: "{{ item.driver | default('bridge') }}"
+  loop:
+    - { name: "core" }
+    - { name: "services" }
+    - { name: "tools" }
+    - { name: "monitoring" }
   tags:
     - setup
