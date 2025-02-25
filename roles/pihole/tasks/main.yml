@@ -1,36 +1,21 @@
 ---
-- name: Create pihole data directory
+- name: Create pihole & unbound directorys
   ansible.builtin.file:
-    path: /srv/pihole
+    path: "{{ item }}"
     state: directory
     mode: "0755"
+  loop:
+    - "/opt/pihole"
+    - "/srv/unbound"
+    - "/srv/pihole"
   tags:
     - setup
-    - setup-pihole
+    - setup-dns
 
-- name: Create unbound data directory
-  ansible.builtin.file:
-    path: /srv/unbound
-    state: directory
-    mode: "0755"
-  tags:
-    - setup
-    - setup-pihole
-
-- name: Create dns network
-  community.docker.docker_network:
-    name: dns
-    state: present
-    ipam_config:
-      - subnet: 10.2.0.0/24
-  tags:
-    - setup
-    - setup-pihole
-
-- name: Setup unbound conf
+- name: Copy unbound unbound.conf
   ansible.builtin.template:
     src: unbound.conf.j2
-    dest: /srv/unbound/unbound.conf
+    dest: "/srv/unbound/unbound.conf"
     mode: "0644"
   tags:
     - setup
@@ -38,56 +23,23 @@
     - setup-pihole
     - update-pihole
 
-- name: Setup unbound
-  community.docker.docker_container:
-    name: unbound
-    image: "{{ unbound_image }}"
-    pull: true
-    recreate: true
-    restart_policy: unless-stopped
-    hostname: unbound
-    env:
-      TZ: "{{ timezone }}"
-      UNBOUND_UID: "1000"
-      UNBOUND_GID: "1000"
-    networks:
-      - name: dns
-        ipv4_address: 10.2.0.200
+- name: Copy compose file
+  ansible.builtin.template:
+    src: compose.yml.j2
+    dest: "/opt/pihole/compose.yml"
+    mode: "0644"
   tags:
     - setup
     - update
     - setup-pihole
     - update-pihole
 
-- name: Setup pihole
-  community.docker.docker_container:
-    name: pihole
-    image: "{{ pihole_image }}"
-    pull: true
-    recreate: true
-    restart_policy: unless-stopped
-    ports:
-      - 53:53/tcp
-      - 53:53/udp
-    env:
-      TZ: "{{ timezone }}"
-      FTLCONF_LOCAL_IPV4: 192.168.178.2
-      PIHOLE_DNS_: 10.2.0.200#5335
-      WEBPASSWORD: "{{ pihole_password }}"
-    labels:
-      traefik.enable=true
-      traefik.http.routers.pihole.rule=Host(`pihole.{{ domain }}`)
-      traefik.http.routers.pihole.entrypoints=websecure
-      traefik.http.routers.pihole.tls.certresolver=letsencrypt
-      traefik.http.services.pihole.loadbalancer.server.port=80
-    volumes:
-      - /srv/pihole/etc-pihole/:/etc/pihole/
-      - /srv/pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/
-    capabilities:
-      - NET_ADMIN
-    networks:
-      - name: dns
-      - name: core
+- name: Start pihole & unbound
+  community.docker.docker_compose_v2:
+    project_src: "/opt/pihole"
+    state: present
+    pull: always
+    recreate: always
   tags:
     - setup
     - update
