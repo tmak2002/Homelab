@@ -1,34 +1,34 @@
 ---
-- name: Create anonymousoverflow directorys
+- name: Create cloudflared directorys
   ansible.builtin.file:
     path: "{{ item }}"
     state: directory
     mode: "0755"
   loop:
-    - "/opt/anonymousoverflow"
+    - "/opt/cloudflared"
   tags:
-    - setup
-    - setup-anonymousoverflow
+    - setup 
+    - setup-cloudflared
 
 - name: Copy compose file
   ansible.builtin.template:
     src: compose.yml.j2
-    dest: "/opt/anonymousoverflow/compose.yml"
+    dest: "/opt/cloudflared/compose.yml"
     mode: "0644"
   tags:
     - setup
-    - setup-anonymousoverflow
+    - setup-cloudflared
     - update
-    - update-anonymousoverflow
+    - update-cloudflared
 
-- name: Start anonymousoverflow
+- name: Start cloudflared
   community.docker.docker_compose_v2:
-    project_src: "/opt/anonymousoverflow/"
+    project_src: "/opt/cloudflared/"
     state: present
     pull: always
     recreate: always
   tags:
     - setup
-    - setup-anonymousoverflow
+    - setup-cloudflared
     - update
-    - update-anonymousoverflow
+    - update-cloudflared

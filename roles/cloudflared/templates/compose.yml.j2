@@ -1,0 +1,14 @@
+networks:
+    core:
+        external: true
+
+services:
+    cloudflared:
+        image: {{ cloudflared_image }}
+        container_name: cloudflared
+        restart: unless-stopped
+        command: tunnel run
+        environment:
+            - TUNNEL_TOKEN={{ cloudflared_token }}
+        networks:
+            - core 

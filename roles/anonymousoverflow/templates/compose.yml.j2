@@ -1,0 +1,20 @@
+networks:
+  core:
+    external: true
+
+services:
+    anonymousoverflow:
+        image: {{ anonymousoverflow_image }}
+        container_name: anonymousoverflow
+        restart: unless-stopped
+        environment:
+            - APP_URL=https://overflow.{{ domain }}
+            - JWT_SIGNING_SECRET={{ anonymousoverflow_secret }}
+        networks:
+            - core
+        labels:
+            traefik.enable: "true"
+            traefik.http.routers.anonymousoverflow.rule: "Host(`overflow.{{ domain }}`)"
+            traefik.http.routers.anonymousoverflow.entrypoints: "websecure"
+            traefik.http.routers.anonymousoverflow.tls.certresolver: "letsencrypt"
+            traefik.http.services.anonymousoverflow.loadbalancer.server.port: "8080"

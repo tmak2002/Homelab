@@ -6,4 +6,6 @@
   roles:
     - networks
     - traefik
+    - cloudflared
     - pihole
+    - anonymousoverflow

@@ -32,7 +32,7 @@ services:
       - "53:53/udp"
     environment:
       TZ: "{{ timezone }}"
-      FTLCONF_LOCAL_IPV4: "192.168.178.2"
+      FTLCONF_dns_listeningMode: all
       PIHOLE_DNS_: "10.2.0.200#5335"
       WEBPASSWORD: "{{ pihole_password }}"
     labels:
