@@ -5,9 +5,9 @@
     state: directory
     mode: "0755"
   loop:
-    - "/opt/pihole"
-    - "/srv/unbound"
-    - "/srv/pihole"
+    - /opt/pihole
+    - /srv/unbound
+    - /srv/pihole
   tags:
     - setup
     - setup-dns
@@ -15,7 +15,7 @@
 - name: Copy unbound unbound.conf
   ansible.builtin.template:
     src: unbound.conf.j2
-    dest: "/srv/unbound/unbound.conf"
+    dest: /srv/unbound/unbound.conf
     mode: "0644"
   tags:
     - setup
@@ -26,7 +26,7 @@
 - name: Copy compose file
   ansible.builtin.template:
     src: compose.yml.j2
-    dest: "/opt/pihole/compose.yml"
+    dest: /opt/pihole/compose.yml
     mode: "0644"
   tags:
     - setup
@@ -36,7 +36,7 @@
 
 - name: Start pihole & unbound
   community.docker.docker_compose_v2:
-    project_src: "/opt/pihole"
+    project_src: /opt/pihole
     state: present
     pull: always
     recreate: always

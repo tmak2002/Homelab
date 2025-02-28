@@ -5,8 +5,8 @@
     state: directory
     mode: "0755"
   loop:
-    - "/opt/traefik"
-    - "/srv/traefik"
+    - /opt/traefik
+    - /srv/traefik
   tags:
     - setup
     - setup-traefik
@@ -14,7 +14,7 @@
 - name: Copy compose file
   ansible.builtin.template:
     src: compose.yml.j2
-    dest: "/opt/traefik/compose.yml"
+    dest: /opt/traefik/compose.yml
     mode: "0644"
   tags:
     - setup
@@ -24,7 +24,7 @@
 
 - name: Start traefik
   community.docker.docker_compose_v2:
-    project_src: "/opt/traefik/"
+    project_src: /opt/traefik/
     state: present
     pull: always
     recreate: always

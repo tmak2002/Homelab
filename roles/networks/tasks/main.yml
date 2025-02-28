@@ -5,9 +5,9 @@
     state: present
     driver: "{{ item.driver | default('bridge') }}"
   loop:
-    - { name: "core" }
-    - { name: "services" }
-    - { name: "tools" }
-    - { name: "monitoring" }
+    - { name: core }
+    - { name: services }
+    - { name: tools }
+    - { name: monitoring }
   tags:
     - setup

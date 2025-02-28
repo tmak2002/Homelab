@@ -1,60 +1,36 @@
 ---
-- name: Create syncthing data directory
+- name: Create syncthing directorys
   ansible.builtin.file:
-    path: /srv/syncthing
+    path: "{{ item }}"
     state: directory
     mode: "0755"
-    owner: 1000
-    group: 1000
+  loop:
+    - /opt/syncthing/
+    - /srv/syncthing
+    - /srv/syncthing/config
   tags:
     - setup
     - setup-syncthing
 
-- name: Create syncthing config directory
-  ansible.builtin.file:
-    path: /srv/syncthing/config
-    state: directory
-    owner: 1000
-    group: 1000
-    mode: "0755"
+- name: Copy compose file
+  ansible.builtin.template:
+    src: compose.yml.j2
+    dest: /opt/syncthing/compose.yml
+    mode: "0644"
   tags:
     - setup
     - setup-syncthing
-
-- name: Create and start syncthing container
-  community.docker.docker_container:
-    name: syncthing
-    image: "{{ syncthing_image }}"
-    pull: true
-    recreate: true
-    restart_policy: unless-stopped
-    ports:
-      - 22000:22000/tcp
-      - 22000:22000/udp
-      - 21027:21027/udp
-    volumes:
-      - /srv/syncthing/config:/config
-      - /srv/syncthing:/data
-    env:
-      PUID: "1000"
-      PGID: "1000"
-      TZ: "{{ timezone }}"
-    networks:
-      - name: tools
-  tags:
-    - setup
     - update
-    - setup-syncthing
     - update-syncthing
 
-- name: Update caddy config
-  ansible.builtin.template:
-    src: syncthing.j2
-    dest: /srv/caddy/sites/syncthing
-    mode: "0644"
-  notify: Restart caddy
+- name: Start syncthing
+  community.docker.docker_compose_v2:
+    project_src: /opt/syncthing/
+    state: present
+    pull: always
+    recreate: always
   tags:
     - setup
-    - update
     - setup-syncthing
+    - update
     - update-syncthing
