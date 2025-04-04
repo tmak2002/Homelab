@@ -1,3 +1,3 @@
 ---
-pihole_image: pihole/pihole:2025.03.0
+pihole_image: pihole/pihole:2025.04.0
 unbound_image: madnuttah/unbound:1.20.0-5
