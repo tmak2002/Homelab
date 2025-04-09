@@ -1,0 +1,14 @@
+---
+- name: Deploy cloudflared
+  community.docker.docker_container:
+    name: cloudflared
+    image: cloudflare/cloudflared:2025.2.1
+    pull: true
+    recreate: true
+    restart_policy: unless-stopped
+    command: tunnel run
+    env:
+      TUNNEL_TOKEN={{ cloudflared_token }}
+    networks:
+      - name: core
+
