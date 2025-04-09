@@ -1,0 +1,10 @@
+---
+- name: Create networks
+  community.docker.docker_network:
+    name: "{{ item.name }}"
+    state: present
+    driver: "{{ item.driver | default('bridge') }}"
+  loop:
+    - { name: core }
+  tags:
+    - setup
