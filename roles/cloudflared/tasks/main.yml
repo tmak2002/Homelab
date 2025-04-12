@@ -2,7 +2,7 @@
 - name: Deploy cloudflared
   community.docker.docker_container:
     name: cloudflared
-    image: cloudflare/cloudflared:2025.2.1
+    image: cloudflare/cloudflared:2025.4.0
     pull: true
     recreate: true
     restart_policy: unless-stopped
