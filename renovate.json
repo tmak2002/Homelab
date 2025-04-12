@@ -1,11 +1,12 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:base",
+    "config:recommended",
     ":semanticCommits"
   ],
-  "regexManagers": [
+  "customManagers": [
     {
+      "customType": "regex",
       "fileMatch": "main.yml",
       "matchStrings": [
         "(?:image: )(?<depName>.*?)(?::(?<currentValue>.*?))?(?:@(?<currentDigest>sha256:[a-f0-9]+))?\\n"
@@ -20,7 +21,7 @@
       "matchDatasources": [
         "docker"
       ],
-      "matchPaths": [
+      "matchFileNames": [
         "**/main.yml"
       ]
     }
