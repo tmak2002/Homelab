@@ -8,3 +8,4 @@
     - cloudflared
     - traefik
     - dns
+    - syncthing
