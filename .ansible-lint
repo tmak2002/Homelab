@@ -2,3 +2,4 @@
 skip_list:
   - no-changed-when
   - var-naming[no-role-prefix]
+  - yaml[line-length]
