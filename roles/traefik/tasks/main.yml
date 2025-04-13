@@ -1,0 +1,55 @@
+---
+- name: Create traefik directorys
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0755"
+  loop:
+    - /opt/traefik
+  tags:
+    - setup
+
+- name: Deploy traefik
+  community.docker.docker_container:
+    name: traefik
+    image: traefik:v3.3.5
+    pull: true
+    recreate: true
+    restart_policy: unless-stopped
+    dns_servers: 1.1.1.1
+    command:
+      - --providers.docker=true
+      - --api.dashboard=true
+      - --certificatesresolvers.letsencrypt.acme.dnschallenge=true
+      - --certificatesresolvers.letsencrypt.acme.dnschallenge.provider=cloudflare
+      - --certificatesresolvers.letsencrypt.acme.email={{ admin_mail }}
+      - --certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json
+      - --entrypoints.web.address=:80
+      - --entrypoints.web.http.redirections.entrypoint.to=websecure
+      - --entrypoints.web.http.redirections.entrypoint.scheme=https
+      - --entrypoints.websecure.address=:443
+      - --entrypoints.websecure.http.tls=true
+      - --entrypoints.websecure.http.tls.certResolver=letsencrypt
+      - --entrypoints.websecure.http.tls.domains[0].main={{ domain }}
+      - --entrypoints.websecure.http.tls.domains[0].sans=*.{{ domain }}
+    env: CLOUDFLARE_EMAIL={{ admin_mail }} CLOUDFLARE_DNS_API_TOKEN={{ cloudflare_api_token }}
+    labels: traefik.enable=true traefik.http.routers.traefik.rule=Host(`{{ domain }}`) traefik.http.routers.traefik.entrypoints=websecure traefik.http.routers.traefik.tls.certresolver=letsencrypt
+      traefik.http.routers.traefik.service=api@internal traefik.http.routers.traefik.middlewares=strip traefik.http.middlewares.strip.stripprefix.prefixes=/traefik
+    ports:
+      - 80:80
+      - 443:443
+      - 443:443/udp
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /srv/traefik/certs:/letsencrypt
+    security_opts:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    capabilities:
+      - NET_BIND_SERVICE
+    networks:
+      - name: core
+  tags:
+    - setup
+    - update
