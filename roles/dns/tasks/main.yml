@@ -1,0 +1,77 @@
+---
+- name: Create pihole & unbound directory
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0755"
+  loop:
+    - /srv/unbound
+    - /srv/pihole
+  tags:
+    - setup
+
+- name: Create dns network
+  community.docker.docker_network:
+    name: dns
+    state: present
+    ipam_config:
+      - subnet: 10.2.0.0/24
+  tags:
+    - setup
+
+- name: Setup unbound conf
+  ansible.builtin.template:
+    src: unbound.conf.j2
+    dest: /srv/unbound/unbound.conf
+    mode: "0644"
+  tags:
+    - setup
+    - update
+
+- name: Deploy unbound
+  community.docker.docker_container:
+    name: unbound
+    image: madnuttah/unbound:1.20.0-2
+    pull: true
+    recreate: true
+    restart_policy: unless-stopped
+    hostname: unbound
+    env:
+      TZ: "{{ timezone }}"
+      UNBOUND_UID: "1000"
+      UNBOUND_GID: "1000"
+    networks:
+      - name: dns
+        ipv4_address: 10.2.0.200
+  tags:
+    - setup
+    - update
+
+- name: Deploy pihole
+  community.docker.docker_container:
+    name: pihole
+    image: pihole/pihole:2025.03.0
+    pull: true
+    recreate: true
+    restart_policy: unless-stopped
+    ports:
+      - 53:53/tcp
+      - 53:53/udp
+    env:
+      TZ: "{{ timezone }}"
+      FTLCONF_dns_listeningMode: all
+      PIHOLE_DNS_: 10.2.0.200#5335
+      WEBPASSWORD: "{{ pihole_password }}"
+    labels: traefik.enable=true traefik.http.routers.pihole.rule=Host(`pihole.{{ domain }}`) traefik.http.routers.pihole.entrypoints=websecure traefik.http.routers.pihole.tls.certresolver=letsencrypt
+      traefik.http.services.pihole.loadbalancer.server.port=80
+    volumes:
+      - /srv/pihole/etc-pihole/:/etc/pihole/
+      - /srv/pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/
+    capabilities:
+      - NET_ADMIN
+    networks:
+      - name: dns
+      - name: core
+  tags:
+    - setup
+    - update
