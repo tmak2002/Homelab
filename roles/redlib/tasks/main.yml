@@ -1,0 +1,29 @@
+---
+- name: Deploy redlib
+  community.docker.docker_container:
+    name: redlib
+    image: quay.io/redlib/redlib@sha256:8a594e4c5f810289f0e4e4adeacc58fee9142ee9a7157010d6157f498054c654
+    pull: true
+    recreate: true
+    restart_policy: unless-stopped
+    user: nobody
+    read_only: true
+    cap_drop:
+      - ALL
+    networks:
+      - name: core
+    security_opts:
+      - no-new-privileges:true
+    healthcheck:
+      test: [CMD, wget, --spider, -q, --tries=1, http://localhost:8080/settings]
+      interval: 5m
+      timeout: 3s
+    labels:
+      traefik.enable=true
+      traefik.http.routers.redlib.rule=Host(`redlib.{{ domain }}`)
+      traefik.http.routers.redlib.entrypoints=websecure
+      traefik.http.routers.redlib.tls.certresolver=letsencrypt
+      traefik.http.services.redlib.loadbalancer.server.port=8080
+  tags:
+    - setup
+    - update
