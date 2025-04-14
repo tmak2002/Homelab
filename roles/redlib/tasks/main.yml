@@ -2,7 +2,7 @@
 - name: Deploy redlib
   community.docker.docker_container:
     name: redlib
-    image: quay.io/redlib/redlib@sha256:8a594e4c5f810289f0e4e4adeacc58fee9142ee9a7157010d6157f498054c654
+    image: quay.io/redlib/redlib@sha256:8c6c56472380188edc8dcd15b1a8e6741281635446b95c6ef1222f9940a96d93
     pull: true
     recreate: true
     restart_policy: unless-stopped
