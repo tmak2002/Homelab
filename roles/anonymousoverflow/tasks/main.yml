@@ -1,0 +1,27 @@
+---
+- name: Deploy anonymousoverflow
+  community.docker.docker_container:
+    name: anonymousoverflow
+    image: codeberg.org/aryak/anonymousoverflow-docker-builds@sha256:036bcfeae7ed02fd3a94d8d64b2aa84fbe04ff901764174ac6548cf1c6905459
+    pull: true
+    recreate: true
+    env:
+      APP_URL: overflow.{{ domain }}
+      JWT_SIGNING_SECRET: "{{ anonymousoverflow_secret }}"
+    restart_policy: unless-stopped
+    read_only: true
+    security_opts:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    networks:
+      - name: core
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.anonymousoverflow.rule: "Host(`overflow.{{ domain }}`)"
+      traefik.http.routers.anonymousoverflow.entrypoints: "websecure"
+      traefik.http.routers.anonymousoverflow.tls.certresolver: "letsencrypt"
+      traefik.http.services.anonymousoverflow.loadbalancer.server.port: "8080"
+  tags:
+    - setup
+    - update
