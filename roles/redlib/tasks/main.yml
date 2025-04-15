@@ -18,11 +18,7 @@
       test: [CMD, wget, --spider, -q, --tries=1, http://localhost:8080/settings]
       interval: 5m
       timeout: 3s
-    labels:
-      traefik.enable=true
-      traefik.http.routers.redlib.rule=Host(`redlib.{{ domain }}`)
-      traefik.http.routers.redlib.entrypoints=websecure
-      traefik.http.routers.redlib.tls.certresolver=letsencrypt
+    labels: traefik.enable=true traefik.http.routers.redlib.rule=Host(`redlib.{{ domain }}`) traefik.http.routers.redlib.entrypoints=websecure traefik.http.routers.redlib.tls.certresolver=letsencrypt
       traefik.http.services.redlib.loadbalancer.server.port=8080
   tags:
     - setup
