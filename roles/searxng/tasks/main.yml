@@ -1,0 +1,84 @@
+---
+- name: Create searxng directory
+  ansible.builtin.file:
+    path: /srv/searxng
+    state: directory
+    mode: "0755"
+  tags:
+    - setup
+
+- name: Ensure searxng network exists
+  community.docker.docker_network:
+    name: searxng
+    state: present
+  tags:
+    - setup
+
+- name: Setup searxng settings
+  ansible.builtin.template:
+    src: settings.yml.j2
+    dest: /srv/searxng/settings.yml
+    mode: "0644"
+  tags:
+    - setup
+    - update
+
+- name: Setup searxng limiter
+  ansible.builtin.template:
+    src: limiter.toml.j2
+    dest: /srv/searxng/limiter.toml
+    mode: "0644"
+  tags:
+    - setup
+    - update
+
+- name: Deploy valkey
+  community.docker.docker_container:
+    name: searxng_redis
+    image: valkey/valkey:8.1.0-alpine
+    pull: true
+    recreate: true
+    command: valkey-server --save 30 1 --loglevel warning
+    restart_policy: unless-stopped
+    volumes:
+      - /srv/searxng/redis-data:/data
+    cap_drop:
+      - ALL
+    capabilities:
+      - CHOWN
+      - SETGID
+      - SETUID
+    networks:
+      - name: searxng
+  tags:
+    - setup
+    - update
+
+- name: Deploy searxng
+  community.docker.docker_container:
+    name: searxng
+    image: searxng/searxng@sha256:7137b3deb07568352fa5a064308cc6722c1879e30275ff67a399417a35dd0779
+    pull: true
+    recreate: true
+    restart_policy: unless-stopped
+    volumes:
+      - /srv/searxng/settings.yml:/etc/searxng/settings.yml
+      - /srv/searxng/limiter.toml:/etc/searxng/limiter.toml
+    env:
+      SEARXNG_BASE_URL: https://search.{{ domain }}
+      SEARXNG_REDIS_URL: redis://searxng_redis
+      SEARXNG_SECRET: "{{ searxng_secret }}"
+    cap_drop:
+      - ALL
+    capabilities:
+      - CHOWN
+      - SETGID
+      - SETUID
+    networks:
+      - name: core
+      - name: searxng
+    labels: traefik.enable=true traefik.http.routers.searxng.rule=Host(`search.{{ domain }}`) traefik.http.routers.searxng.entrypoints=websecure traefik.http.routers.searxng.tls.certresolver=letsencrypt
+      traefik.http.services.searxng.loadbalancer.server.port=8080
+  tags:
+    - setup
+    - update
