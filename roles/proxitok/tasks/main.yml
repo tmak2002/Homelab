@@ -9,7 +9,7 @@
 - name: Deploy proxitok signer
   community.docker.docker_container:
     name: proxitok-signer
-    image: ghcr.io/pablouser1/signtok:latest@sha256:c55ed70b17ebd4a237c2bbbea71579c4800c89ad4c15a1e6e2060006378a353f
+    image: ghcr.io/pablouser1/signtok:latest@sha256:b03fe2d10dfd6bed717c0f4a7d253908963a5e7f7ea9bf48855a3f74c924f3a7
     pull: true
     recreate: true
     restart_policy: unless-stopped
