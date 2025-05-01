@@ -2,7 +2,7 @@
 - name: Deploy anonymousoverflow
   community.docker.docker_container:
     name: anonymousoverflow
-    image: codeberg.org/aryak/anonymousoverflow-docker-builds@sha256:036bcfeae7ed02fd3a94d8d64b2aa84fbe04ff901764174ac6548cf1c6905459
+    image: codeberg.org/aryak/anonymousoverflow-docker-builds@sha256:c00fe50ba4eb929510ff3c2a8d6a29bd362085413b0206a704bc38086f26a369
     pull: true
     recreate: true
     env:
