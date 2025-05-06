@@ -15,7 +15,7 @@
 - name: Deploy syncthing
   community.docker.docker_container:
     name: syncthing
-    image: syncthing/syncthing:1.29.5
+    image: syncthing/syncthing:1.29.6
     pull: true
     recreate: true
     restart_policy: unless-stopped
