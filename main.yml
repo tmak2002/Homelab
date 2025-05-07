@@ -7,10 +7,10 @@
     - networks
     - cloudflared
     - traefik
-    - dns
     - syncthing
     - anonymousoverflow
     - redlib
     - proxitok
     - searxng
     - homepage
+    - dns
