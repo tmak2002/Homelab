@@ -1,6 +1,6 @@
 services:
   syncthing:
-    image: syncthing/syncthing
+    image: syncthing/syncthing:v2
     container_name: syncthing
     hostname: my-syncthing
     environment:
