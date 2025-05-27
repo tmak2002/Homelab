@@ -57,7 +57,7 @@
 - name: Deploy searxng
   community.docker.docker_container:
     name: searxng
-    image: searxng/searxng@sha256:22ca72c15a6b3dad6b7512e05767258a7b2715689c91b4f105928021ea386c5a
+    image: searxng/searxng@sha256:fc9339bb549acd2b883b5ed50b485626f0a11a1c423ac9b9882ad003515a5cfd
     pull: true
     recreate: true
     restart_policy: unless-stopped
