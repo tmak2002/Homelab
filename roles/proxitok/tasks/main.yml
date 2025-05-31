@@ -50,7 +50,7 @@
 - name: Deploy proxitok
   community.docker.docker_container:
     name: proxitok
-    image: ghcr.io/pablouser1/proxitok:latest@sha256:9300a54e10314e1fb8b3c2056705d6a931ce979d92793fd972c37ded446ece60
+    image: ghcr.io/pablouser1/proxitok:latest@sha256:1cbbff4b5b1c6ba8d585379ad71fc93950e340c3a5ae46dd3574e751a873bf8e
     pull: true
     recreate: true
     restart_policy: unless-stopped
