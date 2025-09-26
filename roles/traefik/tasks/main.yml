@@ -10,7 +10,7 @@
 - name: Deploy traefik
   community.docker.docker_container:
     name: traefik
-    image: traefik:v3.4.1
+    image: traefik:v3.5.3
     pull: true
     recreate: true
     restart_policy: unless-stopped
