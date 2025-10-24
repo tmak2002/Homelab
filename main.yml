@@ -1,16 +1,10 @@
 ---
-- name: Set up FangDasKissen
-  hosts: FangDasKissen
+- name: Set up Jizo
+  hosts: Jizo
   become: true
 
   roles:
     - networks
-    - cloudflared
     - traefik
     - syncthing
-    - anonymousoverflow
-    - redlib
-    - proxitok
-    - searxng
-    - homepage
     - dns

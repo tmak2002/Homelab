@@ -62,8 +62,8 @@
       FTLCONF_dns_listeningMode: all
       FTLCONF_dns_upstreams: 10.2.0.200#5335
       FTLCONF_webserver_api_password: "{{ pihole_password }}"
-    labels: traefik.enable=true traefik.http.routers.pihole.rule=Host(`pihole.{{ domain }}`) traefik.http.routers.pihole.entrypoints=websecure traefik.http.routers.pihole.tls.certresolver=letsencrypt
-      traefik.http.services.pihole.loadbalancer.server.port=80
+    labels: traefik.enable=true traefik.http.routers.pihole.rule=Host(`pihole.{{ domain }}`) traefik.http.routers.pihole.entrypoints=websecure
+      traefik.http.routers.pihole.tls.certresolver=letsencrypt traefik.http.services.pihole.loadbalancer.server.port=80
     volumes:
       - /srv/pihole/etc-pihole/:/etc/pihole/
       - /srv/pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/
