@@ -2,11 +2,7 @@
 My personal Homelab managed with Ansible.
 
 > [!IMPORTANT] 
-> It is planed to migrate to k3s at some point this year because of this most here not well maintained for future.
-
-
-> [!IMPORTANT] 
-> This project is in permanent development. Use at your own risk.
+> This project is for personal use.
 
 ## Prerequisites 
 - [ansible](https://www.ansible.com/)
@@ -18,4 +14,3 @@ use this command to see all avaible options.
 ```bash
   just --list
 ```
-
