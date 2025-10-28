@@ -50,7 +50,7 @@
 - name: Deploy pihole
   community.docker.docker_container:
     name: pihole
-    image: pihole/pihole:2025.10.1
+    image: pihole/pihole:2025.10.2
     pull: true
     recreate: true
     restart_policy: unless-stopped
