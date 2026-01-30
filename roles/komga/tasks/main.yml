@@ -16,7 +16,7 @@
 - name: Deploy komga
   community.docker.docker_container:
     name: komga
-    image: ghcr.io/gotson/komga:1.23.6
+    image: ghcr.io/gotson/komga:1.24.1
     pull: true
     recreate: true
     restart_policy: unless-stopped
