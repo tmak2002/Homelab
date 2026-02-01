@@ -16,15 +16,6 @@
     - setup
     - update
 
-- name: Setup doco-cd config
-  ansible.builtin.template:
-    src: doco-cd.j2
-    dest: /opt/doco-cd/.doco-cd.yml
-    mode: "0644"
-  tags:
-    - setup
-    - update
-
 - name: Create and start doco-cd
   community.docker.docker_compose_v2:
     project_src: /opt/doco-cd
