@@ -1,0 +1,7 @@
+services:
+  dockdns:
+    image: ghcr.io/tarow/dockdns:latest
+    restart: unless-stopped
+    volumes:
+      - ./config.enc.yaml:/app/config.yaml
+      - /var/run/docker.sock:/var/run/docker.sock:ro
