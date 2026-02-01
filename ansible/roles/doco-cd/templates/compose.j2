@@ -1,7 +1,7 @@
 x-poll-config: &poll-config
   POLL_CONFIG: |
     - url: https://github.com/tmak2002/homelab.git  # This is the repository to poll
-      reference: main  # Optional: specify the branch or tag to poll, defaults to 'main'
+      reference: v5-dev  # Optional: specify the branch or tag to poll, defaults to 'main'
       interval: 60  # Optional: specify the interval in seconds to poll the repository, defaults to 180 seconds (3 minutes)
       target: ""  # Optional: use to target a specific deployment config file, e.g., "test" -> .doco-cd.test.yaml
 
