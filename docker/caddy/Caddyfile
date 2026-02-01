@@ -7,3 +7,7 @@
 whoami.tmak2002.de {
     reverse_proxy whoami:80
 }
+
+photos.tmak2002.de {
+    respond "Hello World"
+}
