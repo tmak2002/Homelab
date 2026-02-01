@@ -1,3 +1,9 @@
+{
+  # Set the ACME DNS challenge provider to use Cloudflare for all sites
+  acme_dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+  ech tmak2002.de
+}
+
 whoami.tmak2002.de {
     reverse_proxy whoami:80
 }
