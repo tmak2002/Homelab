@@ -9,6 +9,6 @@ chmod +x .git/hooks/pre-commit
 
 # Creates vault password file
 read -rsp "Enter the Ansible vault password: " VAULT_PASS
-echo "${VAULT_PASS}" > .vault_pass
+echo "${VAULT_PASS}" > ansible/.vault_pass
 chmod 0600 .vault_pass
 echo -e "\nProject initialized!"
