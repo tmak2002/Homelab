@@ -1,0 +1,13 @@
+services:
+  whoami:
+    container_name: whoami
+    image: traefik/whoami
+    networks:
+      - proxy
+    labels:
+      - dockdns.name=whoami.tmak2002.de
+      - dockdns.proxied=false
+
+networks:
+  proxy:
+    name: proxy

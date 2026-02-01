@@ -1,0 +1,3 @@
+whoami.tmak2002.de {
+    reverse_proxy whoami:80
+}

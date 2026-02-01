@@ -1,0 +1,29 @@
+services:
+  caddy:
+    container_name: caddy
+    image: ghcr.io/caddybuilds/caddy-cloudflare:latest
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+    networks:
+      - proxy
+    environment:
+      - CLOUDFLARE_API_TOKEN: ${CLOUDFLARE_API_TOKEN}
+    env_file:
+      - secrets.enc.env
+
+volumes:
+  caddy_data:
+  caddy_config:
+
+networks:
+  proxy:
+    name: proxy
