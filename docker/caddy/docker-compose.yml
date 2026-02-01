@@ -15,8 +15,8 @@ services:
       - caddy_config:/config
     networks:
       - proxy
-    environment:
-      - CLOUDFLARE_API_TOKEN="${CLOUDFLARE_API_TOKEN}"
+#     environment:
+#       - CLOUDFLARE_API_TOKEN="${CLOUDFLARE_API_TOKEN}"
     env_file:
       - secrets.enc.env
 
