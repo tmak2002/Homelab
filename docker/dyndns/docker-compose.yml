@@ -1,5 +1,6 @@
 services:
   dockdns:
+    container_name: dyndns
     image: ghcr.io/tarow/dockdns:latest
     restart: unless-stopped
     volumes:
