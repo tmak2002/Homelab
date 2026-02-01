@@ -4,8 +4,4 @@
   become: true
 
   roles:
-    - networks
-    - traefik
-    - syncthing
-    - dns
-    - komga
+    - doco-cd

@@ -1,0 +1,26 @@
+x-poll-config: &poll-config
+  POLL_CONFIG: |
+    - url: https://github.com/tmak2002/homelab.git  # This is the repository to poll
+      reference: main  # Optional: specify the branch or tag to poll, defaults to 'main'
+      interval: 60  # Optional: specify the interval in seconds to poll the repository, defaults to 180 seconds (3 minutes)
+      target: ""  # Optional: use to target a specific deployment config file, e.g., "test" -> .doco-cd.test.yaml
+
+services:
+  doco-cd:
+    container_name: doco-cd
+    image: ghcr.io/kimdre/doco-cd:latest
+    restart: unless-stopped
+    environment:
+      TZ: Europe/Berlin
+      GIT_ACCESS_TOKEN: {{ git_access_token }}
+      SOPS_AGE_KEY: {{ sops_age_key }}
+      <<: *poll-config  # Uncomment this line to use the poll configuration from above (the `x-poll-config` section).
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /srv/doco-cd-data:/data
+    healthcheck:
+      test: [ "CMD", "/doco-cd", "healthcheck" ]
+      start_period: 15s
+      interval: 30s
+      timeout: 5s
+      retries: 3
