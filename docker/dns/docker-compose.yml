@@ -4,6 +4,12 @@ networks:
     ipam:
       config:
         - subnet: 10.2.0.0/24
+  proxy:
+    external: true
+
+volumes:
+  etc-pihole:
+  etc-dnsmasq.d:
 
 services:
   unbound:
@@ -19,3 +25,24 @@ services:
       dns:
         ipv4_address: 10.2.0.200
 
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:2025.11.1
+    restart: unless-stopped
+    ports:
+      - 53:53/tcp
+      - 53:53/udp
+    environment:
+      TZ: Europe/Berlin
+      FTLCONF_dns_listeningMode: all
+      FTLCONF_dns_upstreams: 10.2.0.200#5335
+    volumes:
+      - etc-pihole:/etc/pihole/
+      - etc-dnsmasq.d:/etc/dnsmasq.d/
+    env_file:
+      - secrets.enc.env
+    cap_add:
+      - NET_ADMIN
+    networks:
+      - dns
+      - proxy

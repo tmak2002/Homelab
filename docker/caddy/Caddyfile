@@ -4,10 +4,6 @@
   ech tmak2002.de
 }
 
-whoami.tmak2002.de {
-    reverse_proxy whoami:80
-}
-
-photos.tmak2002.de {
-    respond "Hello World"
+pihole.tmak2002.de {
+    reverse_proxy pihole:80
 }
