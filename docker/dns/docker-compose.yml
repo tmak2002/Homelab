@@ -1,0 +1,21 @@
+networks:
+  dns:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.2.0.0/24
+
+services:
+  unbound:
+    container_name: unbound
+    image: madnuttah/unbound:1.23.1-2
+    restart: unless-stopped
+    hostname: unbound
+    environment:
+      TZ: Europe/Berlin
+      UNBOUND_UID: "1000"
+      UNBOUND_GID: "1000"
+    networks:
+      dns:
+        ipv4_address: 10.2.0.200
+
