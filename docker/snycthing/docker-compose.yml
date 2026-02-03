@@ -1,0 +1,24 @@
+networks:
+  proxy:
+    external: true
+
+volumes:
+  syncthing_config:
+  syncthing:
+
+services:
+  syncthing:
+    container_name: syncthing
+    image: syncthing/syncthing:2.0.13
+    restart: unless-stopped
+    ports:
+      - 22000:22000/tcp
+      - 22000:22000/udp
+      - 21027:21027/udp
+    volumes:
+      - syncthing_config:/var/syncthing/config
+      - syncthing:/var/syncthing
+    environment:
+      TZ: Europe/Berlin
+    networks:
+      - proxy
