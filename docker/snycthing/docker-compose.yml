@@ -9,7 +9,7 @@ volumes:
 services:
   syncthing:
     container_name: syncthing
-    image: syncthing/syncthing:2.0.13
+    image: syncthing/syncthing:2.0.14
     restart: unless-stopped
     ports:
       - 22000:22000/tcp
