@@ -5,10 +5,13 @@ x-poll-config: &poll-config
       interval: 60  # Optional: specify the interval in seconds to poll the repository, defaults to 180 seconds (3 minutes)
       target: ""  # Optional: use to target a specific deployment config file, e.g., "test" -> .doco-cd.test.yaml
 
+volumes:
+  doco-cd:
+
 services:
   doco-cd:
     container_name: doco-cd
-    image: ghcr.io/kimdre/doco-cd:latest
+    image: ghcr.io/kimdre/doco-cd:0.61.0
     restart: unless-stopped
     environment:
       TZ: Europe/Berlin
@@ -17,7 +20,7 @@ services:
       <<: *poll-config  # Uncomment this line to use the poll configuration from above (the `x-poll-config` section).
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /srv/doco-cd-data:/data
+      - doco-cd:/data
     healthcheck:
       test: [ "CMD", "/doco-cd", "healthcheck" ]
       start_period: 15s
