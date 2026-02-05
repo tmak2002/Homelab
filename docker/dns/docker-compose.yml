@@ -7,10 +7,6 @@ networks:
   proxy:
     external: true
 
-volumes:
-  etc-pihole:
-  etc-dnsmasq.d:
-
 services:
   unbound:
     container_name: unbound
@@ -37,8 +33,8 @@ services:
       FTLCONF_dns_listeningMode: all
       FTLCONF_dns_upstreams: 10.2.0.200#5335
     volumes:
-      - etc-pihole:/etc/pihole/
-      - etc-dnsmasq.d:/etc/dnsmasq.d/
+      - /srv/pihole:/etc/pihole/
+      - /srv/dnsmasq:/etc/dnsmasq.d/
     env_file:
       - secrets.enc.env
     cap_add:

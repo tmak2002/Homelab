@@ -2,10 +2,6 @@ networks:
   proxy:
     external: true
 
-volumes:
-  syncthing_config:
-  syncthing:
-
 services:
   syncthing:
     container_name: syncthing
@@ -16,7 +12,7 @@ services:
       - 22000:22000/udp
       - 21027:21027/udp
     volumes:
-      - syncthing:/var/syncthing
+      - /srv/syncthing:/var/syncthing
     environment:
       TZ: Europe/Berlin
     networks:
