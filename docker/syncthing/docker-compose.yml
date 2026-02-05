@@ -16,12 +16,11 @@ services:
       - 22000:22000/udp
       - 21027:21027/udp
     volumes:
-      - syncthing_config:/var/syncthing/config
       - syncthing:/var/syncthing
     environment:
       TZ: Europe/Berlin
     networks:
       - proxy
     post_start:
-      - command: chown -R /var/syncthing/ 1000:1000
+      - command: chown -R 1000:1000 /var/syncthing/
         user: root
