@@ -8,7 +8,7 @@
     {
       "customType": "regex",
       "managerFilePatterns": [
-        "/main.yml/"
+        "/compose.j2/"
       ],
       "matchStrings": [
         "(?:image: )(?<depName>.*?)(?::(?<currentValue>.*?))?(?:@(?<currentDigest>sha256:[a-f0-9]+))?\\n"
@@ -24,7 +24,7 @@
         "docker"
       ],
       "matchFileNames": [
-        "**/main.yml"
+        "**/compose.j2"
       ]
     }
   ]
