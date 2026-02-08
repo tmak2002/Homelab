@@ -5,5 +5,6 @@
 }
 
 pihole.tmak2002.de {
+    redir / /admin
     reverse_proxy pihole:80
 }
