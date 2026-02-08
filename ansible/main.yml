@@ -1,6 +1,6 @@
 ---
-- name: Set up Jizo
-  hosts: Jizo
+- name: Set up Wuff
+  hosts: Wuff
   become: true
 
   roles:
