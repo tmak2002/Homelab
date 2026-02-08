@@ -5,6 +5,10 @@
 }
 
 pihole.tmak2002.de {
-    redir / /admin
-    reverse_proxy pihole:80
+  redir / /admin
+  reverse_proxy pihole:80
+}
+
+syncthing.tmak2002.de {
+  reverse_proxy syncthing:8384
 }
