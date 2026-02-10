@@ -1,0 +1,20 @@
+networks:
+  proxy:
+    external: true
+
+services:
+  vaultwarden:
+    image: ghcr.io/dani-garcia/vaultwarden:1.35.2-alpine
+    container_name: vaultwarden
+    restart: unless-stopped
+    environment:
+      DOMAIN: "https://vault.tmak2002.de"
+      SIGNUPS_ALLOWED: "false"
+      SHOW_PASSWORD_HINT: "false"
+    volumes:
+      - /srv/vaultwarden:/data
+    networks:
+      - proxy
+    labels:
+      - dockdns.name=vault.tmak2002.de
+      - dockdns.proxied=false
