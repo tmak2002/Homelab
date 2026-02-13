@@ -9,9 +9,11 @@ pihole.tmak2002.de {
   reverse_proxy pihole:80
 }
 
+syncthing.tmak2002.de {
+  reverse_proxy syncthing:8384
+}
+
 vault.tmak2002.de {
   encode zstd gzip
   reverse_proxy vaultwarden:80
 }
-
-import sites/*
