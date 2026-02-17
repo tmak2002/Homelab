@@ -17,3 +17,7 @@ vault.tmak2002.de {
   encode zstd gzip
   reverse_proxy vaultwarden:80
 }
+
+links.tmak2002.de {
+  reverse_proxy linkding:9090
+}
