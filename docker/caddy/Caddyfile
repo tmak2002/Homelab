@@ -4,6 +4,16 @@
   ech tmak2002.de
 }
 
+(mutual_tls) {
+  tls {
+    protocols tls1.3
+    client_auth {
+      mode require_and_verify
+      trusted_ca_cert_file /etc/caddy/rootCA.enc.pem
+    }
+  }
+}
+
 pihole.tmak2002.de {
   redir / /admin
   reverse_proxy pihole:80
