@@ -43,3 +43,8 @@ photos.tmak2002.de {
   import mutual_tls
   reverse_proxy immich_server:2283
 }
+
+home.tmak2002.de {
+  import mutual_tls
+  reverse_proxy homepage:3000
+}
