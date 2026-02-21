@@ -26,6 +26,7 @@ syncthing.tmak2002.de {
 }
 
 vault.tmak2002.de {
+  import mutual_tls
   encode zstd gzip
   reverse_proxy vaultwarden:80
 }
