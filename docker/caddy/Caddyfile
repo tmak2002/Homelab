@@ -9,7 +9,9 @@
     protocols tls1.3
     client_auth {
       mode require_and_verify
-      trusted_ca_cert_file /etc/caddy/rootCA.enc.pem
+      trust_pool file {
+        pem_file /vaultls/ca.cert
+      }
     }
   }
 }
@@ -30,4 +32,8 @@ vault.tmak2002.de {
 
 links.tmak2002.de {
   reverse_proxy linkding:9090
+}
+
+certs.tmak2002.de {
+  reverse_proxy vaultls:80
 }

@@ -7,6 +7,16 @@ networks:
     name: proxy
 
 services:
+  vaultls:
+    container_name: vaultls
+    image: ghcr.io/7ritn/vaultls:v0.11.0
+    restart: unless-stopped
+    volumes:
+      - ./vaultls/:/app/data/
+    networks:
+      - proxy
+    env_file:
+      - secrets.enc.env
   caddy:
     container_name: caddy
     image: ghcr.io/caddybuilds/caddy-cloudflare:2.10.2-alpine
@@ -19,7 +29,7 @@ services:
       - "443:443/udp"
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile
-      - ./rootCA.enc.pem:/etc/caddy/rootCA.enc.pem
+      - ./vaultls/:/vaultls/
       - caddy_data:/data
       - caddy_config:/config
     networks:
