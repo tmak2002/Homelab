@@ -10,7 +10,7 @@
     client_auth {
       mode require_and_verify
       trust_pool file {
-        pem_file /vaultls/ca.cert
+        pem_file /vaultls/ca/ca-tls.cert
       }
     }
   }
