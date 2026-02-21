@@ -1,0 +1,67 @@
+volumes:
+  model-cache:
+
+networks:
+  immich:
+  proxy:
+    external: true
+
+services:
+  immich-server:
+    container_name: immich_server
+    image: ghcr.io/immich-app/immich-server:v2.5.6
+    volumes:
+      - /srv/photos/:/data
+      - /etc/localtime:/etc/localtime:ro
+    env_file:
+      - secrets.envc.env
+    depends_on:
+      - redis
+      - database
+    restart: always
+    healthcheck:
+      disable: false
+    networks:
+      - immich
+      - proxy
+    labels:
+      - dockdns.name=photos.tmak2002.de
+      - dockdns.proxied=false
+
+  immich-machine-learning:
+    container_name: immich_machine_learning
+    image: ghcr.io/immich-app/immich-machine-learning:v2.5.6
+    volumes:
+      - model-cache:/cache
+    env_file:
+      - secrets.envc.env
+    restart: always
+    healthcheck:
+      disable: false
+    networks:
+      - immich
+
+  redis:
+    container_name: immich_redis
+    image: docker.io/valkey/valkey:9@sha256:546304417feac0874c3dd576e0952c6bb8f06bb4093ea0c9ca303c73cf458f63
+    healthcheck:
+      test: redis-cli ping || exit 1
+    restart: always
+    networks:
+      - immich
+
+  database:
+    container_name: immich_postgres
+    image: ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0@sha256:bcf63357191b76a916ae5eb93464d65c07511da41e3bf7a8416db519b40b1c23
+    environment:
+      POSTGRES_INITDB_ARGS: '--data-checksums'
+    env_file:
+      - secrets.envc.env
+    volumes:
+      - /srv/immich_db/:/var/lib/postgresql/data
+    shm_size: 128mb
+    restart: always
+    healthcheck:
+      disable: false
+    networks:
+      - immich

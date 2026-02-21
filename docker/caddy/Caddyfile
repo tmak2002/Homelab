@@ -38,3 +38,8 @@ links.tmak2002.de {
 certs.tmak2002.de {
   reverse_proxy vaultls:80
 }
+
+photos.tmak2002.de {
+  import mutual_tls
+  reverse_proxy immich_server:2283
+}
