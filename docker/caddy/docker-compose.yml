@@ -12,7 +12,7 @@ services:
     image: ghcr.io/7ritn/vaultls:v0.11.0
     restart: unless-stopped
     volumes:
-      - ./vaultls/:/app/data/
+      - /srv/vaultls/:/app/data/
     networks:
       - proxy
     env_file:
@@ -29,7 +29,7 @@ services:
       - "443:443/udp"
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile
-      - ./vaultls/:/vaultls/
+      - /srv/vaultls/:/vaultls/
       - caddy_data:/data
       - caddy_config:/config
     networks:
