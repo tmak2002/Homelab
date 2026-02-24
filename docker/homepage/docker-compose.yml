@@ -7,8 +7,10 @@ services:
     image: ghcr.io/gethomepage/homepage:v1.10.1
     container_name: homepage
     volumes:
-      - /srv/homepage/:/app/config
-      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./settings.yaml:/app/config/settings.yaml
+      - ./bookmarks.yaml:/app/config/bookmarks.yaml
+      - ./services.yaml:/app/config/services.yaml
+      - ./widgets.yaml:/app/config/widgets.yaml
     environment:
       HOMEPAGE_ALLOWED_HOSTS: home.tmak2002.de
     networks:

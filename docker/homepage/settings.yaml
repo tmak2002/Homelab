@@ -1,0 +1,23 @@
+---
+# For configuration options and examples, please see:
+# https://gethomepage.dev/configs/settings/
+title: Torben's Homelab
+
+theme: dark
+color: slate
+headerStyle: boxed
+hideVersion: true
+
+background: https://upload.wikimedia.org/wikipedia/commons/a/a2/Weisser_Wolf_Berlin_ca_1998.jpg
+backgroundOpacity: 0.70
+
+layout:
+  Core Services:
+    style: row
+    columns: 3
+  Personal Cloud:
+    style: row
+    columns: 3
+  Utilities:
+    style: row
+    columns: 3

@@ -1,0 +1,33 @@
+---
+# For configuration options and examples, please see:
+# https://gethomepage.dev/configs/services/
+
+- Core Services:
+    - Pi-hole:
+        href: https://pihole.tmak2002.de
+        description: Network-wide Ad Blocking
+        icon: pi-hole
+    - VaulTLS:
+        href: https://certs.tmak2002.de
+        description: TLS Certificate Management
+        icon: mdi-certificate
+    - Vaultwarden:
+        href: https://vault.tmak2002.de
+        description: Password Manager
+        icon: vaultwarden
+
+- Personal Cloud:
+    - Syncthing:
+        href: https://syncthing.tmak2002.de
+        description: File Synchronization
+        icon: syncthing
+    - Immich:
+        href: https://photos.tmak2002.de
+        description: Photo Backup & Gallery
+        icon: immich
+
+- Utilities:
+    - Linkding:
+        href: https://links.tmak2002.de
+        description: Bookmark Manager
+        icon: linkding
