@@ -9,7 +9,7 @@ networks:
 services:
   vaultls:
     container_name: vaultls
-    image: ghcr.io/7ritn/vaultls:v0.11.1
+    image: ghcr.io/7ritn/vaultls:v1.0.1
     restart: unless-stopped
     volumes:
       - /srv/vaultls/:/app/data/
