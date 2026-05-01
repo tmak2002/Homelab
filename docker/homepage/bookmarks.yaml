@@ -6,6 +6,9 @@
     - Github:
         - abbr: GH
           href: https://github.com/
+    - Gitlab:
+        - abbr: GL
+          href: https://git.lumos.city/
     - Gentoo Wiki:
         - abbr: GW
           href: https://wiki.gentoo.org/
