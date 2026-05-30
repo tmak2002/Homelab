@@ -10,7 +10,7 @@ networks:
 services:
   unbound:
     container_name: unbound
-    image: madnuttah/unbound:1.24.2-2
+    image: madnuttah/unbound:1.25.1-2
     restart: unless-stopped
     hostname: unbound
     environment:
