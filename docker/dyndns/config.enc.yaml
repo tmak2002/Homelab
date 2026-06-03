@@ -18,9 +18,7 @@ dns:
     #ENC[AES256_GCM,data:yNsV4iEZmL0BYUr54/1p3CMRONZK1j/swkIyVbJBz5ZLlwZ++iVdK2uCqK94k5JMh8F6UQw=,iv:iuwyytTNFyfV0zGbMCL4qsfMM2mc+7okipN+yVOyt4s=,tag:sJ0whfGjikWkBrzP+m1UKw==,type:comment]
     purgeUnknown: ENC[AES256_GCM,data:MtAabQ==,iv:Qoga7PU2CLn0EG6eu3hl/wTfn0N/Ex+12iorHT3SgoA=,tag:uUuUMi9rwr/Fos8roSJ6JA==,type:bool]
 domains:
-    - name: ENC[AES256_GCM,data:gdvfZuVTgXRzk5xcL1Sh5t/n,iv:ufkA0K9S8bQ/z8zXdmAFZ2pNgy/YWXyu7I0SZx6+gvY=,tag:okkl4KogTJ5VRee+Eqd5Aw==,type:str]
-    - name: ENC[AES256_GCM,data:m+XqO6zDlZz35cLWSA75CQ==,iv:2D6KIQQKeKiQUnjToPglkPXK2V3dQTgz5ePDuCKB0vk=,tag:fXmk3FKyMiyt+NT5DXkbbA==,type:str]
-    - name: ENC[AES256_GCM,data:wrKVAK9bwI9z9WcTneUjbw==,iv:96tlUZZDIOUHFHv7lVEnBbUb9Y///2Kri3yd/NOFFpA=,tag:fskpxH75aakdIpy4a24h5w==,type:str]
+    - name: ENC[AES256_GCM,data:3/tQbIZvDmh8Be+hH5Ajk/3g,iv:vmT9AATG1KOrKQrBLVRjo7GH7bceNfibdPn/W8BJccc=,tag:RpHJUUH9AeJX8NML0YiKJA==,type:str]
 sops:
     age:
         - enc: |
@@ -32,7 +30,7 @@ sops:
             akXgO3CPUDVDYux7BQMg9tyl657bYNyq+IsIKFRVephgIu5jHfxMMw==
             -----END AGE ENCRYPTED FILE-----
           recipient: age1uzs8skuuflmzqgldsfxccmt8d9aagswvrpg4tnutss4n9svt44vqpwlywf
-    lastmodified: "2026-06-03T14:27:56Z"
-    mac: ENC[AES256_GCM,data:wGo4vSRlAizpISwFxYPcyW0tw9EUKxzSMz7DlTPJsDMBBcXGHlDWrMpMlrwBN/fmchFQIDKmfLDF4b+wNpLcziJI3D3aId2zsCToXzNFmOk5wOlAzeeHoffEagCKEZUNjZJZq+lHacb3kMi6IMqcsfvE8l9QPeJrVH0en+FrZfQ=,iv:19c2P8zBU5OuWP8NYgDBzrdjaqG74AOVTNiXMX1L25U=,tag:gdlFMtm+VVMpZbtaHw/OyA==,type:str]
+    lastmodified: "2026-06-03T18:02:56Z"
+    mac: ENC[AES256_GCM,data:BybPUWfJmcmj2Is4Otfv9PN+CVB0tF9JzoHVQMfELX8yH95Y55ZolAC1IeYXpMWDth4Qa8o7vkZbm+KiZ7RHukrE7Ti+M66NULbJrwBHbkJljjhhGB9QiPvZjiuegFlZdUE37Ad3x+472go1612fETc5m5jDMv+G+Qq19dvjvOw=,iv:pmqsuSDX+afEuGqFoFXe+R2I+6NnMYdVi/2/Juwf2Uc=,tag:kUQ+Fbvo6pPVMkdQWK9ydQ==,type:str]
     unencrypted_suffix: _unencrypted
     version: 3.13.1
