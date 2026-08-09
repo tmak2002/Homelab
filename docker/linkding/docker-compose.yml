@@ -5,7 +5,7 @@ networks:
 services:
   linkding:
     container_name: linkding
-    image: sissbruecker/linkding:1.45.0
+    image: sissbruecker/linkding:1.46.0
     volumes:
       - /srv/linkding:/etc/linkding/data"
     restart: unless-stopped
