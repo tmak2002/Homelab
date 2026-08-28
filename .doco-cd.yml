@@ -1,4 +1,6 @@
 working_dir: docker/
-auto_discover: true
-auto_discover_opts:
-  depth: 1
+auto_discovery:
+  enabled: true
+  delete: true
+  remove_volumes: false 
+  remove_images: true
