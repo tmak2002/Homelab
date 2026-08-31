@@ -32,6 +32,7 @@ vault.tmak2002.de {
 }
 
 links.tmak2002.de {
+  import mutual_tls
   reverse_proxy linkding:9090
 }
 
