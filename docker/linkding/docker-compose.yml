@@ -11,3 +11,6 @@ services:
     restart: unless-stopped
     networks:
       - proxy
+    labels:
+      - dockdns.name=links.tmak2002.de
+      - dockdns.proxied=false
