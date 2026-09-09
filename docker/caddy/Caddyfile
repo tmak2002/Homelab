@@ -22,6 +22,7 @@ pihole.tmak2002.de {
 }
 
 syncthing.tmak2002.de {
+  import mutual_tls
   reverse_proxy syncthing:8384
 }
 
