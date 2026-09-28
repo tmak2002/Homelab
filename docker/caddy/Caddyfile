@@ -21,6 +21,10 @@ pihole.tmak2002.de {
   reverse_proxy pihole:80
 }
 
+dns.tmak2002.de {
+  reverse_proxy technitium:5380
+}
+
 syncthing.tmak2002.de {
   import mutual_tls
   reverse_proxy syncthing:8384

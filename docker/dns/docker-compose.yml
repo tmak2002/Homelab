@@ -42,3 +42,25 @@ services:
     networks:
       - dns
       - proxy
+
+  technitium:
+    container_name: technitium
+    image: technitium/dns-server:15.5.1
+    restart: unless-stopped
+    environment:
+      DNS_SERVER_DOMAIN: dns.tmak2002.de
+      DNS_SERVER_LOG_FOLDER_PATH: /var/log/technitium/dns
+    volumes:
+      - /srv/technitium-config:/etc/dns
+      - /srv/technitium-logs:/var/log/technitium/dns
+    env_file:
+      - secrets.enc.env
+    networks:
+      - proxy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://127.0.0.1:5380/api/dnsClient/healthCheck | grep '\"status\":\"ok\"'"]
+      #test: ["CMD", "dig", "+short", "+norecurse", "+retry=0", "@127.0.0.1", "localhost"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
