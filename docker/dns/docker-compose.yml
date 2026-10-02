@@ -1,45 +1,8 @@
 networks:
-  dns:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 10.2.0.0/24
   proxy:
     external: true
 
 services:
-  unbound:
-    container_name: unbound
-    image: madnuttah/unbound:1.25.1-2
-    restart: unless-stopped
-    hostname: unbound
-    environment:
-      TZ: Europe/Berlin
-      UNBOUND_UID: "1000"
-      UNBOUND_GID: "1000"
-    networks:
-      dns:
-        ipv4_address: 10.2.0.200
-
-  pihole:
-    container_name: pihole
-    image: pihole/pihole:2026.09.0
-    restart: unless-stopped
-    environment:
-      TZ: Europe/Berlin
-      FTLCONF_dns_listeningMode: all
-      FTLCONF_dns_upstreams: 10.2.0.200#5335
-    volumes:
-      - /srv/pihole:/etc/pihole/
-      - /srv/dnsmasq:/etc/dnsmasq.d/
-    env_file:
-      - secrets.enc.env
-    cap_add:
-      - NET_ADMIN
-    networks:
-      - dns
-      - proxy
-
   technitium:
     container_name: technitium
     image: technitium/dns-server:15.5.1
