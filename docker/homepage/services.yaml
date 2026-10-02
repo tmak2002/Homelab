@@ -3,9 +3,9 @@
 # https://gethomepage.dev/configs/services/
 
 - Core Services:
-    - Pi-hole:
-        href: https://pihole.tmak2002.de
-        description: Network-wide Ad Blocking
+    - Technitium:
+        href: https://dns.tmak2002.de
+        description: Technitium DNS Server
         icon: pi-hole
     - VaulTLS:
         href: https://certs.tmak2002.de
