@@ -36,3 +36,6 @@ services:
       - proxy
     env_file:
       - secrets.enc.env
+    dns:
+      - 1.1.1.1
+      - 1.0.0.1
