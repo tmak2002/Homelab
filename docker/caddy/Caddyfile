@@ -54,3 +54,7 @@ home.tmak2002.de {
   import mutual_tls
   reverse_proxy homepage:3000
 }
+
+firefly.tmak2002.de {
+  reverse_proxy firefly:8080
+}
