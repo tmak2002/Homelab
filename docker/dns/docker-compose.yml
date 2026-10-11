@@ -5,7 +5,7 @@ networks:
 services:
   technitium:
     container_name: technitium
-    image: technitium/dns-server:15.6.0
+    image: technitium/dns-server:15.6.1
     restart: unless-stopped
     ports:
       - 53:53/tcp
