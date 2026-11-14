@@ -4,11 +4,11 @@ networks:
 
 services:
   linkding:
-    container_name: linkding
     image: sissbruecker/linkding:1.47.0
+    container_name: linkding
+    restart: unless-stopped
     volumes:
       - /srv/linkding:/etc/linkding/data"
-    restart: unless-stopped
     networks:
       - proxy
     labels:
