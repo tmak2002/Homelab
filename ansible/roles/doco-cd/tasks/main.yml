@@ -11,14 +11,13 @@
   ansible.builtin.template:
     src: compose.j2
     dest: /opt/doco-cd/compose.yml
-    mode: "0644"
+    mode: "0600"
   tags:
     - setup
-    - update
 
 - name: Create and start doco-cd
   community.docker.docker_compose_v2:
     project_src: /opt/doco-cd
   tags:
     - setup
-    - update
+
