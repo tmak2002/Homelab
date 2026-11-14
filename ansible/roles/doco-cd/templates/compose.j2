@@ -16,6 +16,7 @@ services:
       TZ: Europe/Berlin
       SELF_UPDATE_ENABLED: "true"
       GIT_ACCESS_TOKEN: {{ git_access_token }}
+      GIT_AUTH_DOMAINS: "- domains: [github.com]"
       SOPS_AGE_KEY: {{ sops_age_key }}
       <<: *poll-config  # Uncomment this line to use the poll configuration from above (the `x-poll-config` section).
     volumes:

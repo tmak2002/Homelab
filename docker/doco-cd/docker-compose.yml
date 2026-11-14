@@ -12,13 +12,14 @@ volumes:
 services:
   doco-cd:
     container_name: doco-cd
-    image: ghcr.io/kimdre/doco-cd:0.131.0
+    image: ghcr.io/kimdre/doco-cd:0.134.0
     restart: unless-stopped
     env_file:
       - secrets.enc.env
     environment:
       TZ: Europe/Berlin
       SELF_UPDATE_ENABLED: "true"
+      GIT_AUTH_DOMAINS: "- domains: [github.com]"
       <<: *poll-config
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
