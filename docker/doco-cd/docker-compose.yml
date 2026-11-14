@@ -1,0 +1,31 @@
+x-poll-config: &poll-config
+  POLL_CONFIG: |
+    - url: https://github.com/tmak2002/homelab.git
+      reference: main
+      interval: 60
+
+volumes:
+  doco-cd:
+    external: true
+    name: doco-cd_doco-cd
+
+services:
+  doco-cd:
+    container_name: doco-cd
+    image: ghcr.io/kimdre/doco-cd:0.131.0
+    restart: unless-stopped
+    env_file:
+      - secrets.enc.env
+    environment:
+      TZ: Europe/Berlin
+      SELF_UPDATE_ENABLED: "true"
+      <<: *poll-config
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - doco-cd:/data
+    healthcheck:
+      test: [ "CMD", "/doco-cd", "healthcheck" ]
+      start_period: 15s
+      interval: 30s
+      timeout: 5s
+      retries: 3
