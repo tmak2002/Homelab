@@ -29,7 +29,7 @@ services:
       - dockdns.proxied=false
 
   immich-machine-learning:
-    image: ghcr.io/immich-app/immich-machine-learning:v3.3.5
+    image: ghcr.io/immich-app/immich-machine-learning:v3.4.1
     container_name: immich_machine_learning
     restart: always
     env_file:
