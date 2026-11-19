@@ -8,7 +8,7 @@ networks:
 
 services:
   immich-server:
-    image: ghcr.io/immich-app/immich-server:v3.4.1
+    image: ghcr.io/immich-app/immich-server:v3.4.2
     container_name: immich_server
     restart: always
     env_file:
@@ -29,7 +29,7 @@ services:
       - dockdns.proxied=false
 
   immich-machine-learning:
-    image: ghcr.io/immich-app/immich-machine-learning:v3.4.1
+    image: ghcr.io/immich-app/immich-machine-learning:v3.4.2
     container_name: immich_machine_learning
     restart: always
     env_file:
