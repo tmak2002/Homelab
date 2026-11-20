@@ -22,7 +22,7 @@ services:
       - /srv/technitium-config:/mnt/source/technitium-config:ro
       - /srv/vaultls:/mnt/source/vaultls:ro
       - ./config:/etc/borgmatic.d:ro
-      - ./ssh:/root/.ssh:ro
+      - /root/ssh:/root/.ssh:ro
       - borgmatic_config:/root/.config/borg
       - borgmatic_cache:/root/.cache/borg
       - borgmatic_state:/root/.local/state/borgmatic
