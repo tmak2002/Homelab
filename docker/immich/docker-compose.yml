@@ -3,6 +3,7 @@ volumes:
 
 networks:
   immich:
+    name: immich
   proxy:
     external: true
 

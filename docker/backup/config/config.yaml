@@ -1,0 +1,37 @@
+repositories:
+  - path: ${BORG_REPO}
+    label: homelab
+
+source_directories:
+  - /mnt/source/photos
+  - /mnt/source/vaultwarden
+  - /mnt/source/linkding
+  - /mnt/source/syncthing
+  - /mnt/source/technitium-config
+  - /mnt/source/vaultls
+
+archive_name_format: "homelab-{now:%Y-%m-%d-%H%M%S}"
+
+retention:
+  keep_daily: 7
+  keep_weekly: 4
+  keep_monthly: 12
+
+consistency:
+  checks:
+    - repository
+    - archives
+  check_last: 3
+
+postgresql_databases:
+  - name: ${DB_DATABASE_NAME}
+    hostname: database
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    format: custom
+
+sqlite_databases:
+  - name: vaultwarden
+    path: /mnt/source/vaultwarden/db.sqlite3
+  - name: linkding
+    path: /mnt/source/linkding/db.sqlite3

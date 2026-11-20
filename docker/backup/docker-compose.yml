@@ -1,0 +1,35 @@
+networks:
+  immich:
+    external: true
+
+services:
+  borgmatic:
+    image: ghcr.io/borgmatic-collective/borgmatic:latest
+    container_name: borgmatic
+    restart: unless-stopped
+    stop_grace_period: 10m
+    env_file:
+      - secrets.enc.env
+    environment:
+      TZ: Europe/Berlin
+      CRON: "0 2 * * *"
+      EXTRA_PKGS: "sqlite postgresql-client"
+    volumes:
+      - /srv/photos:/mnt/source/photos:ro
+      - /srv/vaultwarden:/mnt/source/vaultwarden:ro
+      - /srv/linkding:/mnt/source/linkding:ro
+      - /srv/syncthing:/mnt/source/syncthing:ro
+      - /srv/technitium-config:/mnt/source/technitium-config:ro
+      - /srv/vaultls:/mnt/source/vaultls:ro
+      - ./config:/etc/borgmatic.d:ro
+      - ./ssh:/root/.ssh:ro
+      - borgmatic_config:/root/.config/borg
+      - borgmatic_cache:/root/.cache/borg
+      - borgmatic_state:/root/.local/state/borgmatic
+    networks:
+      - immich
+
+volumes:
+  borgmatic_config:
+  borgmatic_cache:
+  borgmatic_state:
