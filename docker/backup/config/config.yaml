@@ -12,16 +12,16 @@ source_directories:
 
 archive_name_format: "homelab-{now:%Y-%m-%d-%H%M%S}"
 
-retention:
-  keep_daily: 7
-  keep_weekly: 4
-  keep_monthly: 12
+keep_daily: 7
+keep_weekly: 4
+keep_monthly: 12
 
-consistency:
-  checks:
-    - repository
-    - archives
-  check_last: 3
+checks:
+  - name: repository
+    frequency: 1 month
+  - name: archives
+    frequency: 1 month
+check_last: 3
 
 postgresql_databases:
   - name: ${DB_DATABASE_NAME}
