@@ -12,7 +12,7 @@ volumes:
 services:
   doco-cd:
     container_name: doco-cd
-    image: ghcr.io/kimdre/doco-cd:0.137.0
+    image: ghcr.io/kimdre/doco-cd:0.138.0
     restart: unless-stopped
     env_file:
       - secrets.enc.env
